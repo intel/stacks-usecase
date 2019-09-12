@@ -1,1 +1,1 @@
-## Intel system stacks end to end usecases
+## Intel system stacks e2e usecases
