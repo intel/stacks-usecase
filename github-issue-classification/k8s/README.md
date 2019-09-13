@@ -18,7 +18,7 @@ cd $GIC_WORKDIR/
 ./scripts/get-data.sh -u
 ```
 
-## Create a PV
+## Create a Persistent Volume (PV)
 
 ```bash
 # Load a PV on the kubeflow namespace
@@ -49,11 +49,10 @@ kubectl apply -f $GIC_WORKDIR/k8s/manifests/process-data.yaml
 
 ## Model training
 
-> NOTE: To take advantage of the Intel® AVX-512 and VNNI functionality
-(including the MKL-DNN releases) with the Deep Learning Reference Stack,
-you must use the following hardware:
-*Intel® AVX-512 images require an Intel® Xeon® Scalable Platform
-*VNNI requires a 2nd generation Intel® Xeon® Scalable Platform
+> NOTE: To take advantage of the Intel® AVX-512 and Intel® Deep Learning Boost features, 
+(included with the MKL-DNN releases) with the Deep Learning Reference Stack, you must use the following hardware:
+*Images using Intel® AVX-512 instructions require an Intel® Xeon® Scalable Processors
+*Images using Intel® Deep Learning Boost instructions requires a 2nd Generation Intel® Xeon® Scalable Processors
 
 ```bash
 # Build a Docker image to be consumed by the TfJob. Note the image should be
