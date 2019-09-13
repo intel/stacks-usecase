@@ -209,6 +209,6 @@ jupyter notebook --ip 0.0.0.0 --no-browser --allow-root
 
 **NOTE**: If you get a 'hit rate limits' error when fetching raw json file from github API, you have to add the `-u "<github username>"` option to curl
 
-Security Issues
+## Security Issues
 
 Security issues can be reported to Intel's security incident response team via https://intel.com/security.
