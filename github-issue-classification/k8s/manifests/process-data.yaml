@@ -1,0 +1,22 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "dars-container"
+  namespace: kubeflow 
+spec:
+  containers:
+    - name: dars-container
+      image: clearlinux/stacks-dars-mkl
+      env:
+      - name: JAVA_HOME
+        value: "/usr/lib/jvm/java-1.11.0-openjdk"
+      command: ["/bin/bash","-c"]
+      args: ["export JAVA_HOME=$(JAVA_HOME) && export PATH=$(JAVA_HOME)/bin:${PATH} && spark-shell -i /workdir/data/proc-data.scala"]
+      volumeMounts:
+        - mountPath: "/workdir/"
+          name: "preprocess-workdir"
+  restartPolicy: Never
+  volumes:
+    - name: "preprocess-workdir"
+      persistentVolumeClaim:
+        claimName: "tfevent-pvc"

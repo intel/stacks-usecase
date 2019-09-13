@@ -1,0 +1,17 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "inference-container"
+  namespace: kubeflow 
+spec:
+  containers:
+    - name: inference-container
+      image: <your-registry>/stacks-dlrs-mkl-inference:v0.4.1
+      volumeMounts:
+        - mountPath: "/workdir/models"
+          name: "preprocess-workdir"
+  restartPolicy: Never
+  volumes:
+    - name: "preprocess-workdir"
+      persistentVolumeClaim:
+        claimName: "tfevent-pvc"

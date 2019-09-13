@@ -1,0 +1,27 @@
+body {
+    background-image: url("back.jpg");
+    background-size: cover;
+  }
+
+.center-div
+{
+     margin: 0 auto;
+     text-align: center;
+}
+
+div#title-box
+{
+    margin: auto;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;
+    color: white;
+}
+
+.fill-text
+{
+margin: auto;
+    text-align:  justify;
+    font-size: 12pt;
+    color: white;
+}

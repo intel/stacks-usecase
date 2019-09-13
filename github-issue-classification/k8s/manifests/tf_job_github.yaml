@@ -1,0 +1,62 @@
+apiVersion: "kubeflow.org/v1beta2"
+kind: "TFJob"
+metadata:
+  generateName: "tf-job-gic-"
+  namespace: kubeflow
+spec:
+  cleanPodPolicy: None
+  tfReplicaSpecs:
+    PS:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
+              command:
+                - "python"
+                - "/workdir/training/train.py"
+              volumeMounts:
+                - mountPath: "/workdir"
+                  name: "training-workdir"
+          volumes:
+            - name: "training-workdir"
+              persistentVolumeClaim:
+                claimName: "tfevent-pvc"
+    Worker:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
+              command:
+                - "python"
+                - "/workdir/training/train.py"
+              volumeMounts:
+                - mountPath: "/workdir"
+                  name: "training-workdir"
+          volumes:
+            - name: "training-workdir"
+              persistentVolumeClaim:
+                claimName: "tfevent-pvc"
+    Master:
+      replicas: 1
+      restartPolicy: Never
+      template:
+        spec:
+          containers:
+            - name: tensorflow
+              image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
+              command:
+                - "python"
+                - "/workdir/training/train.py"
+              volumeMounts:
+                - mountPath: "/workdir"
+                  name: "training-workdir"
+          volumes:
+            - name: "training-workdir"
+              persistentVolumeClaim:
+                claimName: "tfevent-pvc"

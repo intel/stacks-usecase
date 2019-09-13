@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: tfevent-pod
+  namespace: kubeflow
+spec:
+  volumes:
+    - name: tfevent-storage
+      persistentVolumeClaim:
+        claimName: tfevent-pvc
+  containers:
+    - name: tfevent-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/workdir/"
+          name: tfevent-storage

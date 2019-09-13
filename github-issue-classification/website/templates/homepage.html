@@ -1,0 +1,27 @@
+<!--doctype html-->
+<head>
+
+    <link rel= "stylesheet" type= "text/css" href= "../static/styles/mainpage.css">
+
+    <title>Github Issue Labels with Intel's DLRS</title>
+    <div id='title-box'>Github Issue Labels with Intel's DLRS</div>
+    <div class=fill-text style="text-align:center">Interactive text labeling translation using Tensorflow, running on an Intel Deep Learning Reference Stack (DLRS) backend. See clearlinux.org for more information.</div>
+</head>
+
+<body>
+    <div class="center-div">
+
+        <form action="/" method="POST">
+            <textarea id="inputText" name="inputText" rows="3" cols=50% placeholder='Input text here'></textarea>
+            <textarea id="outputText" readonly name="outputText" rows="3" cols=50% placeholder='Submitted text'>{{outText if outText is not none}} </textarea>
+            <p>
+            <INPUT TYPE="Submit" Value="Submit">
+        </form>
+
+        <div>
+            <textarea id="optText" readonly name="optText" rows="6" cols=100% placeholder='Output text here'>{{optText if optText is not none}}</textarea>
+        </div>
+
+    </div>
+</body>
+

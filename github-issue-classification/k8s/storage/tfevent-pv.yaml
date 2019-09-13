@@ -1,0 +1,15 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: tfevent-pv
+  namespace: kubeflow
+spec:
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: "/workdir/"
+    type: ''
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: manual
