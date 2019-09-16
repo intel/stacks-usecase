@@ -19,6 +19,7 @@ from glob import glob
 import logging
 import sys
 import pickle
+import os
 
 import pandas as pd
 import numpy as np
@@ -56,7 +57,13 @@ def dataset(test_size=0.33, random_state=42):
     """split body and label to train and test batches"""
     df = pd.DataFrame()
     # Read data from disk
-    for f_name in glob("/workdir/data/tidy/*.json"):
+    workdir = "/workdir/data/tidy/"
+    if os.getenv("DATASET_NAME", workdir) != workdir:
+        workdir = "/opt/dkube/dataset/" + os.getenv("DATASET_NAME") + "/tidy/"
+    workdir = workdir + "*.json"
+
+    #for f_name in glob("/workdir/data/tidy/*.json"):
+    for f_name in glob(workdir):
         df_temp = pd.read_json(f_name, lines=True)
         df = df.append(df_temp)
     return train_test_split(df["body"], df["labels"], test_size=test_size, random_state=random_state)

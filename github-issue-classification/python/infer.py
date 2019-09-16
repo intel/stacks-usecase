@@ -19,6 +19,7 @@ from glob import glob
 import logging
 import sys
 import pickle
+import os
 
 import pandas as pd
 import numpy as np
@@ -30,21 +31,23 @@ logger = logging.getLogger(__name__)
 BATCH_SIZE = 128
 EPOCH = 30
 N_NODES = 1000
-
+MODELDIR = os.getenv("MODEL_NAME","/workdir/models/")
 
 def feature_vectorizer(body):
     """prepare body data with trained tfidf vectorizer"""
-    with open("/workdir/models/X_vectorizer.pk", "rb") as pickled_file:
+    with open(MODELDIR+"/X_vectorizer.pk", "rb") as pickled_file:
         vectorizer = pickle.load(pickled_file)
     features = vectorizer.transform(body)
     return features
 
 
 def infer(body=None):
+    if MODELDIR != "/workdir/models/":
+        MODELDIR = "/opt/dkube/model/" + MODELDIR + "/"
     X = feature_vectorizer(body)
-    model = load_model("/workdir/models/git-model.h5")
+    model = load_model(MODELDIR + "/git-model.h5")
     prediction = model.predict(X, verbose=0)
-    with open("/workdir/models/label_binarizer.pk", "rb") as pickled_file:
+    with open(MODELDIR + "/label_binarizer.pk", "rb") as pickled_file:
         mlb = pickle.load(pickled_file)
     return mlb.inverse_transform(np.round(prediction))
 
