@@ -31,7 +31,11 @@ logger = logging.getLogger(__name__)
 BATCH_SIZE = 128
 EPOCH = 30
 N_NODES = 1000
-MODELDIR = os.getenv("MODEL_NAME","/workdir/models/")
+
+try:
+    MODELDIR = os.getenv("MODEL_PATH")
+except KeyError:
+    MODELDIR = "/workdir/models/"
 
 def feature_vectorizer(body):
     """prepare body data with trained tfidf vectorizer"""
@@ -42,8 +46,6 @@ def feature_vectorizer(body):
 
 
 def infer(body=None):
-    if MODELDIR != "/workdir/models/":
-        MODELDIR = "/opt/dkube/model/" + MODELDIR + "/"
     X = feature_vectorizer(body)
     model = load_model(MODELDIR + "/git-model.h5")
     prediction = model.predict(X, verbose=0)

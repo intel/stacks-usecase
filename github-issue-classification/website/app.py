@@ -14,7 +14,7 @@ def homepage():
 
     if request.method=="POST":
         input_text  = request.form["inputText"]
-        response = requests.post('http://localhost:5060/github_issues/infer', json={'issue':str(input_text)})
+        response = requests.post('http://localhost:5059/github_issues/infer', json={'issue':str(input_text)})
         labels_json = response.json()
         labels = ', '.join(labels_json['label'][0])
         return render_template('homepage.html', outText = f"You submitted '{input_text}'", optText = labels)

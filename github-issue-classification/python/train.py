@@ -36,6 +36,10 @@ BATCH_SIZE = 128
 EPOCH = 30
 N_NODES = 1000
 
+try:
+    DATADIR = os.getenv("DATASET_PATH") + "/tidy/"
+except KeyError:
+    DATADIR = "/workdir/data/tidy/"
 
 def _save_data(data, file_name=None):
     with open(file_name, "wb") as f_handle:
@@ -57,10 +61,7 @@ def dataset(test_size=0.33, random_state=42):
     """split body and label to train and test batches"""
     df = pd.DataFrame()
     # Read data from disk
-    workdir = "/workdir/data/tidy/"
-    if os.getenv("DATASET_NAME", workdir) != workdir:
-        workdir = "/opt/dkube/dataset/" + os.getenv("DATASET_NAME") + "/tidy/"
-    workdir = workdir + "*.json"
+    workdir = DATADIR + "*.json"
 
     #for f_name in glob("/workdir/data/tidy/*.json"):
     for f_name in glob(workdir):

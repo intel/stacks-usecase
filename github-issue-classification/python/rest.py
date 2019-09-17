@@ -17,10 +17,11 @@
 #
 """a rest api for github issue classification"""
 import flask
-
+from flask_cors import CORS
 from infer import infer
 
 app = flask.Flask("github issue classifier")
+CORS(app)
 
 banner = {"what": "github issue classifier",
           "usage": {
