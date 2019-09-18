@@ -19,6 +19,7 @@ from glob import glob
 import logging
 import sys
 import pickle
+import os
 
 import pandas as pd
 import numpy as np
@@ -35,6 +36,10 @@ BATCH_SIZE = 128
 EPOCH = 30
 N_NODES = 1000
 
+try:
+    DATADIR = os.getenv("DATASET_PATH") + "/tidy/"
+except KeyError:
+    DATADIR = "/workdir/data/tidy/"
 
 def _save_data(data, file_name=None):
     with open(file_name, "wb") as f_handle:
@@ -56,7 +61,10 @@ def dataset(test_size=0.33, random_state=42):
     """split body and label to train and test batches"""
     df = pd.DataFrame()
     # Read data from disk
-    for f_name in glob("/workdir/data/tidy/*.json"):
+    workdir = DATADIR + "*.json"
+
+    #for f_name in glob("/workdir/data/tidy/*.json"):
+    for f_name in glob(workdir):
         df_temp = pd.read_json(f_name, lines=True)
         df = df.append(df_temp)
     return train_test_split(df["body"], df["labels"], test_size=test_size, random_state=random_state)

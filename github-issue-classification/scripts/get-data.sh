@@ -4,15 +4,18 @@ set -e
 set -u
 set -o pipefail
 
-URL="${2:-https://api.github.com/repos/clearlinux/distribution/issues}"
 PAGE=20 
-OPTION="${1:-}"
+URL="https://api.github.com/repos/clearlinux/distribution/issues"
+DLDIR="/workdir/data/raw/"
+AUTH=""
 
 BANNER="Get github issues data, if no <issues_url> provided, issues from ClearLinux github will be downloaded."
-USAGE="$(basename "$0") [-h] [-u <issues_url>]
+USAGE="$(basename "$0" ) [-h] [-u <issues_url>] [-d <outputpath>] [-t <token>]
 where:
   -h | --help help
-  -u | --url <issues_url> to download github issues"
+  -u | --url <issues_url> to download github issues
+  -d | --dir <directory> to download github issues
+  -t | --token <git token> to download data"
 
 run() {
   echo "=============================================================="
@@ -32,28 +35,46 @@ get_data () {
   while [[ $PAGE -gt 0 ]]
   do
     URL+="?per_page=100&page="
-    curl "$URL$PAGE" > /workdir/data/raw/issues-$((100 * PAGE)).json
-    (( PAGE -= 1 ))
+    #curl -H "Authorization: token $TOKEN" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
+    curl -H "$AUTH" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
+    PAGE=$((PAGE - 1))
   done
-  jq --slurp "." /workdir/data/raw/issue*.json >> /workdir/data/raw/all_issues.json
+  jq --slurp "." $DLDIR/issue*.json >> $DLDIR/all_issues.json
 }
 
-while :
+while [[ $# -gt 0 ]]
 do
-    case "$OPTION" in
+key="$1"
+case $key in
     -h | --help ) run && echo "$USAGE"
       exit
       ;;
-    -u | --url ) begin="$(date +%s)"
-       run "get issues data from ::  ${URL}" && get_data
-       finish="$(date +%s)"
-       runtime=$(((finish-begin)/60))
-       run "Done in :  $runtime minute(s)"
-      exit
-      ;;
+    -u|--url)
+    URL=$2
+    shift # move argument
+    shift # move value
+    ;;
+    -d|--dir)
+    DLDIR="$2"
+    shift # move argument
+    shift # move value
+    ;;
+    -t|--token)
+    AUTH="Authorization: token $2"
+    shift #move argument
+    shift #move value
+    ;;
     *) echo "invalid flag, try -h for help" >&2
       exit 1
-      ;;
-    esac
+    ;;
+esac
 done
+
 run && echo "$BANNER"
+
+begin="$(date +%s)"
+run "get issues data from ::  ${URL}" && get_data
+finish="$(date +%s)"
+runtime=$(((finish-begin)/60))
+run "Done in :  $runtime minute(s)"
+exit
