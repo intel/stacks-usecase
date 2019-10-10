@@ -4,7 +4,7 @@ set -e
 set -u
 set -o pipefail
 
-PAGE=20 
+PAGE=20
 URL="https://api.github.com/repos/clearlinux/distribution/issues"
 DLDIR="/workdir/data/raw/"
 AUTH=""
@@ -36,7 +36,7 @@ get_data () {
   do
     URL+="?per_page=100&page="
     #curl -H "Authorization: token $TOKEN" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
-    curl -H "$AUTH" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
+    curl "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
     PAGE=$((PAGE - 1))
   done
   jq --slurp "." $DLDIR/issue*.json >> $DLDIR/all_issues.json
@@ -50,12 +50,12 @@ case $key in
       exit
       ;;
     -u|--url)
-    URL=$2
+    URL=${2-default}
     shift # move argument
     shift # move value
     ;;
     -d|--dir)
-    DLDIR="$2"
+    DLDIR=${2-default}
     shift # move argument
     shift # move value
     ;;
