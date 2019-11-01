@@ -20,6 +20,7 @@ import logging
 import sys
 import pickle
 import os
+import errno
 
 import pandas as pd
 import numpy as np
@@ -37,7 +38,7 @@ EPOCH = 30
 N_NODES = 1000
 
 try:
-    DATADIR = os.getenv("DATASET_PATH") + "/tidy/"
+    DATADIR = os.environ["DATASET_PATH"] + "/tidy/"
 except KeyError:
     DATADIR = "/workdir/data/tidy/"
 
@@ -112,4 +113,9 @@ def train():
 
 
 if __name__ == "__main__":
+    try:
+        os.makedirs("/workdir/models/")
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
     train()

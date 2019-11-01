@@ -1,0 +1,19 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "ghissue-training"
+  namespace: kubeflow 
+spec:
+  containers:
+    - name: training
+      image: <your-repository>/stacks-dlrs-mkl-gic:v0.4.1
+      command:
+        - "python"
+        - "/workdir/python/train.py"
+      volumeMounts:
+        - mountPath: "/workdir"
+          name: "training-workdir"
+  volumes:
+    - name: "training-workdir"
+      persistentVolumeClaim:
+        claimName: "tfevent-pvc"

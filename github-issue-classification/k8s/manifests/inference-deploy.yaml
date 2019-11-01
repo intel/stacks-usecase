@@ -1,0 +1,48 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ghissue-inference
+  namespace: kubeflow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ghissue-inference
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ghissue-inference
+    spec:
+      containers:
+        - name: inference
+          image: <your-registry>/stacks-dlrs-mkl-inference:v0.4.1
+          volumeMounts:
+             - mountPath: "/workdir"
+               name: "preprocess-workdir"
+      restartPolicy: Always
+      volumes:
+        - name: "preprocess-workdir"
+          persistentVolumeClaim:
+             claimName: "tfevent-pvc"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ghissue-inference
+  namespace: kubeflow
+  labels:
+    app: ghissue-inference
+spec:
+  ports:
+  - port: 5000
+    protocol: TCP
+    targetPort: 5059
+  selector:
+    app: ghissue-inference
+  type: NodePort

@@ -16,7 +16,7 @@ spec:
               image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
               command:
                 - "python"
-                - "/workdir/training/train.py"
+                - "/workdir/python/train.py"
               volumeMounts:
                 - mountPath: "/workdir"
                   name: "training-workdir"
@@ -34,7 +34,7 @@ spec:
               image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
               command:
                 - "python"
-                - "/workdir/training/train.py"
+                - "/workdir/python/train.py"
               volumeMounts:
                 - mountPath: "/workdir"
                   name: "training-workdir"
@@ -52,7 +52,7 @@ spec:
               image: <your-registry>/stacks-dlrs-mkl-gic:v0.4.1
               command:
                 - "python"
-                - "/workdir/training/train.py"
+                - "/workdir/python/train.py"
               volumeMounts:
                 - mountPath: "/workdir"
                   name: "training-workdir"

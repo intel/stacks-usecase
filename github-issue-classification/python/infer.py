@@ -33,7 +33,7 @@ EPOCH = 30
 N_NODES = 1000
 
 try:
-    MODELDIR = os.getenv("MODEL_PATH")
+    MODELDIR = os.environ["MODEL_PATH"]
 except KeyError:
     MODELDIR = "/workdir/models/"
 

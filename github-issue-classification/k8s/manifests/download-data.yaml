@@ -1,0 +1,18 @@
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  name: "ghissue-datadownload"
+  namespace: kubeflow 
+spec:
+  containers:
+    - name: download
+      image: clearlinux/stacks-dars-mkl
+      command: ["/bin/bash","-c"]
+      args: ["/workdir/scripts/get-data.sh"]
+      volumeMounts:
+        - mountPath: "/workdir/"
+          name: "download-workdir"
+  volumes:
+    - name: "download-workdir"
+      persistentVolumeClaim:
+        claimName: "tfevent-pvc"

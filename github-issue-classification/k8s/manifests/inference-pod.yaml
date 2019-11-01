@@ -1,14 +1,14 @@
 apiVersion: "v1"
 kind: "Pod"
 metadata:
-  name: "inference-container"
+  name: "ghissue-inference"
   namespace: kubeflow 
 spec:
   containers:
-    - name: inference-container
+    - name: inference
       image: <your-registry>/stacks-dlrs-mkl-inference:v0.4.1
       volumeMounts:
-        - mountPath: "/workdir/models"
+        - mountPath: "/workdir"
           name: "preprocess-workdir"
   restartPolicy: Never
   volumes:

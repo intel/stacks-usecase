@@ -27,6 +27,7 @@ run() {
 # install required bundles
 install_reqs () {
   swupd bundle-add jq
+  swupd bundle-add curl
 }
 
 # curl github issues; if you hit the api ratelimit, use authenticated requests
@@ -70,6 +71,7 @@ case $key in
 esac
 done
 
+run && mkdir -p $DLDIR
 run && echo "$BANNER"
 
 begin="$(date +%s)"
