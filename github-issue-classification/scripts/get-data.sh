@@ -36,7 +36,7 @@ get_data () {
   do
     URL+="?per_page=100&page="
     #curl -H "Authorization: token $TOKEN" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
-    curl "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
+    curl -H "$AUTH" "$URL$PAGE" > $DLDIR/issues-$((100 * PAGE)).json
     PAGE=$((PAGE - 1))
   done
   jq --slurp "." $DLDIR/issue*.json >> $DLDIR/all_issues.json
