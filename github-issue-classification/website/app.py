@@ -30,11 +30,11 @@ parser = argparse.ArgumentParser()
 parser.add_argument("-ip", "--endpoint", required=False,
                     default="localhost", help="Endpoint address of the inference API")
 parser.add_argument("-p", "--port", required=False,
-                    default="5060", help="Endpoint port of the inference API")
+                    default="5059", help="Endpoint port of the inference API")
 parser.add_argument("-wip", "--website_endpoint", required=False,
                     default="localhost", help="Endpoint address for the website")
 parser.add_argument("-wp", "--website_port", required=False,
-                    default="5059", help="Endpoint port for the website")
+                    default="5000", help="Endpoint port for the website")
 parser.add_argument("-s", "--tls", required=False, action="store_true",
                     default=False, help="Is the inference endpoint encrypted with TLS ")
 args = vars(parser.parse_args())

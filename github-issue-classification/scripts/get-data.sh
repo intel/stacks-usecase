@@ -4,7 +4,7 @@ set -e
 set -u
 set -o pipefail
 
-PAGE=20 
+PAGE=20
 URL="https://api.github.com/repos/clearlinux/distribution/issues"
 DLDIR="/workdir/data/raw/"
 AUTH=""
@@ -51,12 +51,12 @@ case $key in
       exit
       ;;
     -u|--url)
-    URL=$2
+    URL=${2-default}
     shift # move argument
     shift # move value
     ;;
     -d|--dir)
-    DLDIR="$2"
+    DLDIR=${2-default}
     shift # move argument
     shift # move value
     ;;

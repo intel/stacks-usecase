@@ -1,4 +1,4 @@
 pandas
 sklearn
 flask
-flask_cors
+flask-cors
