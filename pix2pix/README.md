@@ -56,7 +56,6 @@ Available options are:
 python infer.py
 ```
 
-Currently the image that is infered is hardcoded into infer.py, but different options will come soon.
 
 ### Testing
 
@@ -73,3 +72,12 @@ pip install -r test-requirements.txt
 python -m pytest
 ```
 
+## Citation
+```
+@article{pix2pix2017,
+  title={Image-to-Image Translation with Conditional Adversarial Networks},
+  author={Isola, Phillip and Zhu, Jun-Yan and Zhou, Tinghui and Efros, Alexei A},
+  journal={CVPR},
+  year={2017}
+}
+```
