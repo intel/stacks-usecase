@@ -16,18 +16,11 @@ git clone https://github.com/intel/stacks-usecase
 ```bash
 cd usecases/tensorflow/pix2pix
 ```
-2. Run the Deep Learning Reference Stack (DLRS)
+2. Run `make train` to create `pix2pix-train` docker image that utilizes DLRS and instantiate a container
 ```bash
-docker run -it -v ${PWD}:/workdir clearlinux/stacks-dlrs-mkl
+docker run -it pix2pix-train
 ```
-3. Navigate to the github usecase and install requirements
-```bash
-cd /workdir
-```
-```bash
-pip install -r requirements.txt
-```
-4. Download the data and process it
+3. Download the data and process it
 ```bash
 python scripts/get_data.py
 ```
