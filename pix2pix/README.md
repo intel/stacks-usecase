@@ -1,11 +1,10 @@
 # PIX 2 PIX
 
-Artists are faced with the challenge of effectively synthesizing photos from label maps, reconstructing objects from edge maps or colorizing images, among other tasks. Pix2pix is a fun, popular cGAN deep learning model that, given an abstract input, can create realistic outputs for use in art, mapping, or colorization. The pix2pix architecture is complex, but utilizing it is easy and an excellent showcase of the abilities of the Deep Learning Reference Stack. 
+Artists are faced with the challenge of effectively synthesizing photos from label maps, reconstructing objects from edge maps or colorizing images, among other tasks. Pix2pix is a fun, popular cGAN deep learning model that, given an abstract input, can create artistic outputs. 
 
 ![app_frontend](./pix2pix_website/pix2pix.png)
 
-The code has been developed in such a way that, any new dataset can be easily added and the cGAN trained with it. We are also opensourcing a web front-end, components to deploy pix2pix inference as a function as service with openfaas as well.
-
+The code has been developed in such a way that, any new dataset can be easily added and the cGAN trained with it. We are also opensourcing a web front-end, components to deploy pix2pix inference as a function as service with openfaas as well. The pix2pix architecture is complex, but utilizing it is easy and an excellent showcase of the abilities of the Deep Learning Reference Stack. 
 
 ### Instructions
 
