@@ -19,6 +19,8 @@
 #
 """a rest api for pix2pix."""
 import io
+import random
+import string
 
 import flask
 from PIL import Image
@@ -47,8 +49,10 @@ def generate():
     """generate an image from an `img` obtained from a post request"""
     if flask.request.files.get("img"):
         img = flask.request.files["img"].read()
-        img = Image.open(io.BytesIO(img))
-        y_hat = infer(img)
+        image = Image.open(img).convert("RGB")
+        input_img_path = "input_img_{}.jpg".format("".join(random.choices(string.ascii_letters, k=5)))
+        image.save(input_img_path)
+        y_hat = infer(input_img_path)
         return flask.jsonify({"generated": y_hat}), 201
     return flask.jsonify({"status": "not an image file"})
 
