@@ -73,11 +73,24 @@ python -m pytest
 ```
 
 ## Citation
+
+The original pix2pix paper:
 ```
 @article{pix2pix2017,
   title={Image-to-Image Translation with Conditional Adversarial Networks},
   author={Isola, Phillip and Zhu, Jun-Yan and Zhou, Tinghui and Efros, Alexei A},
   journal={CVPR},
   year={2017}
+}
+```
+
+The owner of the facades dataset:
+```
+@INPROCEEDINGS{Tylecek13,
+  author = {Radim Tyle{\v c}ek and Radim {\v S}{\' a}ra},
+  title = {Spatial Pattern Templates for Recognition of Objects with Regular Structure},
+  booktitle = {Proc. GCPR},
+  year = {2013},
+  address = {Saarbrucken, Germany},
 }
 ```
