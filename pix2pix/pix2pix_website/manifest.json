@@ -1,0 +1,7 @@
+{
+  "name": "pix-demo",
+  "short_name": "pix-demo",
+  "description": "A demonstration of Deep Learning and FaaS",
+  "start_url": "/",
+  "display": "standalone"
+}
