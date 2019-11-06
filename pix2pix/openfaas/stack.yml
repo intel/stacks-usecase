@@ -1,0 +1,14 @@
+provider:
+  name: faas
+  gateway: http://127.0.0.1:8080
+
+functions:
+  pix2pix-faas:
+    lang: python3-dlrs
+    handler: ./src
+    image: <repository>/pix2pix-faas:0.1
+    environment:
+        fprocess: "python3 -W ignore handler.py"
+        read_timeout: "90s"
+        write_timeout: "90s"
+        upstream_timeout: "85s"
