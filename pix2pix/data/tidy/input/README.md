@@ -1,0 +1,1 @@
+## A place to store processed input images
