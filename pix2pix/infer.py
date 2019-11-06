@@ -68,4 +68,4 @@ def infer(img):
 if __name__ == "__main__":
     logger.info("\033[92m" + "[INFO] " + "\033[0m" + " : initializing inference..")
     # to debug locally, uncomment the line below and run python infer.py image.jpg
-    # fire.Fire(infer)
+    fire.Fire(infer)

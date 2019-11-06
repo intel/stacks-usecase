@@ -40,20 +40,28 @@ python main.py
 
 If you want to adjust hyperparamaters like cycles, epochs, and batche_size, or even train the discriminator or generator separately, add them as arguments. For example:
 ```bash
-python main.py --model continue --epochs 5 --batch_size 12 --cycles 5
+python main.py
+or
+python main.py --model continue --size_batch 12 --cycles 200
 ```
 
 Available options are:
 * model (string)
     * continue - run models named 'generator_model.h5' and 'discriminator_model.h5' in the 'models' directory
     * checkpoint - run the latest model in the 'checkpoints' directory
-* epochs (int)
-* batch_size (int)
 * cycles (int)
+* size_batch (int)
+* check_freq (int)
+
+For more information on what each option does, run:
+```bash
+python main.py --help
+```
+
 
 #### Inference
 ```bash
-python infer.py
+python infer.py <path to your image>
 ```
 
 
