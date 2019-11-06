@@ -16,10 +16,8 @@ git clone https://github.com/intel/stacks-usecase
 ```bash
 cd usecases/tensorflow/pix2pix
 ```
-2. Run `make train` to create `pix2pix-train` docker image that utilizes DLRS and instantiate a container
-```bash
-docker run -it pix2pix-train
-```
+2. Run `make train` to create and instantiate the `pix2pix-train` docker image that utilizes DLRS
+
 3. Download the data and process it
 ```bash
 python scripts/get_data.py
