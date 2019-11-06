@@ -1,5 +1,7 @@
 # Github Issue Classification Usecase
 
+This end-to-end use case uses the [Data Analytics Reference Stack](https://clearlinux.org/stacks/data-analytics) and the [Deep Learning Reference Stack](https://clearlinux.org/stacks/deep-learning) to walk through a classification example, using data from GitHub* to show how Machine Learning can analyze and tag new issues to save time for developers who are creating issues, and to ensure the issues come to the attention of the right audience through correct tagging.
+
 ### Introduction
 
 Github issues are currently manually classified, but why not automate the tagging process? A simple ML algorithm can be used to analyze the issue content and tag it automatically, saving time for developers and directing their focus to critical issues. This usecase shows the user how to do exactly that.
