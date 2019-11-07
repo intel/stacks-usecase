@@ -1,0 +1,2 @@
+language: python3-dlrs
+fprocess: python3 main.py
