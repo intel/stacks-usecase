@@ -2,7 +2,7 @@ sudo: required
 
 services:
   - docker
-
+  
 script:
-  - cd pix2pix
+  - cd pix2pix/
   - make
