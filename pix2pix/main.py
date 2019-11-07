@@ -272,7 +272,7 @@ def load_disc_gen():
 
     return disc_model, gen_model
 
-def intel_optimizations(first=False):
+def cpu_config(first=False):
     # intel optimizations
     num_cores, num_sockets = get_cpuinfo()
     if first:
@@ -291,7 +291,7 @@ def intel_optimizations(first=False):
 # Training
 ###########################################################
 def train(model="checkpoint", cycles=1000, size_batch=50, checkpoint=20):
-    intel_optimizations(first=True)
+    cpu_config(first=True)
     # --------------------------------------
     # Load models and data
     # If generator and discriminator models already exist,
@@ -397,7 +397,7 @@ def train(model="checkpoint", cycles=1000, size_batch=50, checkpoint=20):
         checkpoint_gen(model=gen_model, history=history_gen)
         checkpoint_image(gen_model=gen_model)
         backend.clear_session()
-        intel_optimizations()
+        cpu_config()
         disc_model, gen_model = load_disc_gen()
         
 
