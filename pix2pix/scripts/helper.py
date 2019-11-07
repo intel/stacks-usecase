@@ -11,7 +11,7 @@ import subprocess
 
 from PIL import Image
 from sklearn.preprocessing import normalize
-from tensorflow.keras.models import Model, load_model
+from tensorflow.keras.models import Model
 
 
 def get_cpuinfo():
