@@ -44,7 +44,8 @@ def infer(img):
     """inference function, accepts an abstract image file return generated image"""
     home_dir = get_directory()
     # load model
-    gen_model = load_model(home_dir + "/models/generator_model.h5")
+    backend.clear_session()
+    gen_model = load_model(home_dir + "/models/generator_model.h5", compile=False)
     img = np.array(Image.open(img))
     s_time = time.time()
     result = gen_model.predict(img.reshape(1, 256, 256, 3))
