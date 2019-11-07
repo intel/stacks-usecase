@@ -4,14 +4,14 @@ import datetime
 import numpy as np
 import random
 
-from glob import glob
+import glob
 from os.path import abspath, dirname
 import psutil
 import subprocess
 
 from PIL import Image
 from sklearn.preprocessing import normalize
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model, load_model
 
 
 def get_cpuinfo():
@@ -38,7 +38,7 @@ def get_directory():
 def get_image_f_names(location):
     """ Return a list of file names for images"""
     f_names_list = []
-    for f_name in glob(location):
+    for f_name in glob.glob(location):
         f_names_list.append(f_name)
     return f_names_list
 
