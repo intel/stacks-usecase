@@ -17,10 +17,11 @@ in this repository to deploy it automatically and guide you through basic functi
 
 ## Software requirements
 
-* Git
+* Git (Any Version)
 * JDK 1.8
-* Maven
-* Docker
+* Maven (3.1.x or higher)
+* Docker (18 or higher)
+* Scala 2.12
 
 ***
 

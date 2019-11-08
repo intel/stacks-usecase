@@ -27,7 +27,7 @@ CONTAINER_HOSTNAME='zeppelindars'
 
 build_zeppelin () {
     git clone https://github.com/apache/zeppelin.git
-    cd zeppelin && mvn clean package -q -Pspark-2.4 -Pscala-2.12 -DskipTests
+    cd zeppelin && mvn clean package -Pspark-2.4 -Pscala-2.12 -DskipTests | fgrep -v "[INFO]" | fgrep -v "Download" | fgrep -v "[SECURITY]"
     if [[ $? -ne 0 ]]; then echo "[ERROR] Zeppelin build" && exit 1; fi
 }
 
