@@ -1,0 +1,150 @@
+{
+  "paragraphs": [
+    {
+      "title": "Install Pre-requisits",
+      "text": "%sh\nmkdir -p repositories\nswupd bundle-add git",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-16 16:49:54.413",
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": true,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "INCOMPLETE",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Loading required manifests...\nDownloading packs (19.46 MB) for:\n - git\n\t...0%\n\t...1%\n\t...2%\n\t...3%\n\t...4%\n\t...5%\n\t...6%\n\t...7%\n\t...8%\n\t...9%\n\t...10%\n\t...11%\n\t...12%\n\t...13%\n\t...14%\n\t...15%\n\t...16%\n\t...17%\n\t...18%\n\t...19%\n\t...20%\n\t...21%\n\t...22%\n\t...23%\n\t...24%\n\t...25%\n\t...26%\n\t...27%\n\t...28%\n\t...29%\n\t...30%\n\t...31%\n\t...32%\n\t...33%\n\t...34%\n\t...35%\n\t...36%\n\t...37%\n\t...38%\n\t...39%\n\t...40%\n\t...41%\n\t...42%\n\t...43%\n\t...44%\n\t...45%\n\t...46%\n\t...47%\n\t...48%\n\t...49%\n\t...50%\n\t...51%\n\t...52%\n\t...53%\n\t...54%\n\t...55%\n\t...56%\n\t...57%\n\t...58%\n\t...59%\n\t...60%\n\t...61%\n\t...62%\n\t...63%\n\t...64%\n\t...65%\n\t...66%\n\t...67%\n\t...68%\n\t...69%\n\t...70%\n\t...71%\n\t...72%\n\t...73%\n\t...74%\n\t...75%\n\t...76%\n\t...77%\n\t...78%\n\t...79%\n\t...80%\n\t...81%\n\t...82%\n\t...83%\n\t...84%\n\t...85%\n\t...86%\n\t...87%\n\t...88%\n\t...89%\n\t...90%\n\t...91%\n\t...92%\n\t...93%\n\t...94%\n\t...95%\n\t...96%\n\t...97%\n\t...98%\n\t...99%\n\t...100%\nFinishing packs extraction...\nNo extra files need to be downloaded\nInstalling bundle(s) files...\n\t...0%\n\t...1%\n\t...2%\n\t...3%\n\t...4%\n\t...5%\n\t...6%\n\t...7%\n\t...8%\n\t...9%\n\t...10%\n\t...11%\n\t...12%\n\t...13%\n\t...14%\n\t...15%\n\t...16%\n\t...17%\n\t...18%\n\t...19%\n\t...20%\n\t...21%\n\t...22%\n\t...23%\n\t...24%\n\t...25%\n\t...26%\n\t...27%\n\t...28%\n\t...29%\n\t...30%\n\t...31%\n\t...32%\n\t...33%\n\t...34%\n\t...35%\n\t...36%\n\t...37%\n\t...38%\n\t...39%\n\t...40%\n\t...41%\n\t...42%\n\t...43%\n\t...44%\n\t...45%\n\t...46%\n\t...47%\n\t...48%\n\t...49%\n\t...50%\n\t...51%\n\t...52%\n\t...53%\n\t...54%\n\t...55%\n\t...56%\n\t...57%\n\t...58%\n\t...59%\n\t...60%\n\t...61%\n\t...62%\n\t...63%\n\t...64%\n\t...65%\n\t...66%\n\t...67%\n\t...68%\n\t...69%\n\t...70%\n\t...71%\n\t...72%\n\t...73%\n\t...74%\n\t...75%\n\t...76%\n\t...77%\n\t...78%\n\t...79%\n\t...80%\n\t...81%\n\t...82%\n\t...83%\n\t...84%\n\t...85%\n\t...86%\n\t...87%\n\t...88%\n\t...89%\n\t...90%\n\t...91%\n\t...92%\n\t...93%\n\t...94%\n\t...95%\n\t...96%\n\t...97%\n\t...98%\n\t...99%\n\t...100%\nCalling post-update helper scripts\n"
+          },
+          {
+            "type": "TEXT",
+            "data": "Paragraph received a SIGTERM\nExitValue: 143"
+          }
+        ]
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571238098377_-348912156",
+      "id": "paragraph_1571238098377_-348912156",
+      "dateCreated": "2019-10-16 15:01:38.377",
+      "dateStarted": "2019-10-16 15:02:32.609",
+      "dateFinished": "2019-10-16 15:04:24.083",
+      "status": "FINISHED"
+    },
+    {
+      "title": "Clone Repository",
+      "text": "%sh\ncd repositories \u0026\u0026 git clone https://github.com/shiv4nsh/spark-kmeans-timeseries-data-example.git",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-16 16:49:26.526",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": false
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": true,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Cloning into \u0027spark-kmeans-timeseries-data-example\u0027...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571238279532_-1344744078",
+      "id": "paragraph_1571238279532_-1344744078",
+      "dateCreated": "2019-10-16 15:04:39.532",
+      "dateStarted": "2019-10-16 15:04:42.779",
+      "dateFinished": "2019-10-16 15:04:47.749",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%spark\nimport org.apache.spark.mllib.clustering.{KMeans, KMeansModel}\nimport org.apache.spark.mllib.linalg.Vectors\n\nimport scala.util.Try\n\nval pressureRead \u003d sc.textFile(\"/repositories/spark-kmeans-timeseries-data-example/src/main/resources/PamarcoPressure.txt\")\nval vibrationText \u003d sc.textFile(\"/repositories/spark-kmeans-timeseries-data-example/src/main/resources/PamarcoVibration.txt\")\n\nval pressureRDD \u003d pressureRead.map(_.split(\",\"))\nval vibrationRDD \u003d vibrationText.map(_.split(\"\\t\")).persist()\n\nval vibrationVector \u003d vibrationRDD.map { row \u003d\u003e\n  Try(Vectors.dense(row(1).toDouble, row(2).toDouble, row(3).toDouble)).toOption\n}.filter(_.isDefined).map(_.get)\nval splittedRDD \u003d vibrationVector.randomSplit(Array(0.6, 0.4))\nval trainRDD \u003d splittedRDD(0)\nval testRDD \u003d splittedRDD(1)\n// Cluster the data into two classes using KMeans\nval numClusters \u003d 2\nval numIterations \u003d 20\nval clusters \u003d KMeans.train(trainRDD, numClusters, numIterations)\n\n// Evaluate clustering by computing Within Set Sum of Squared Errors\nval WSSSE \u003d clusters.computeCost(vibrationVector)\nprintln(\"Within Set Sum of Squared Errors \u003d \" + WSSSE)\n\n// Save and load model\nclusters.save(sc, \"/repositories/spark-kmeans-timeseries-data-example/target/org/apache/spark/KMeansExample/KMeansModel\")\nval sameModel \u003d KMeansModel.load(sc, \"/repositories/spark-kmeans-timeseries-data-example/target/org/apache/spark/KMeansExample/KMeansModel\")\n\nimport spark.implicits._\nval foo \u003d sameModel.predict(testRDD)\nfoo.toDF.show\n\n",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-16 16:50:11.558",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "Within Set Sum of Squared Errors \u003d 420021.8564854293\n+-----+\n|value|\n+-----+\n|    0|\n|    0|\n|    1|\n|    0|\n|    1|\n|    0|\n|    1|\n|    0|\n|    0|\n|    0|\n|    0|\n|    0|\n|    1|\n|    0|\n|    0|\n|    1|\n|    0|\n|    0|\n|    1|\n|    1|\n+-----+\nonly showing top 20 rows\n\nimport org.apache.spark.mllib.clustering.{KMeans, KMeansModel}\nimport org.apache.spark.mllib.linalg.Vectors\nimport scala.util.Try\n\u001b[1m\u001b[34mpressureRead\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m \u003d /repositories/spark-kmeans-timeseries-data-example/src/main/resources/PamarcoPressure.txt MapPartitionsRDD[233] at textFile at \u003cconsole\u003e:124\n\u001b[1m\u001b[34mvibrationText\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[String]\u001b[0m \u003d /repositories/spark-kmeans-timeseries-data-example/src/main/resources/PamarcoVibration.txt MapPartitionsRDD[235] at textFile at \u003cconsole\u003e:125\n\u001b[1m\u001b[34mpressureRDD\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[Array[String]]\u001b[0m \u003d MapPartitionsRDD[236] at map at \u003cconsole\u003e:127\n\u001b[1m\u001b[34mvibrationRDD\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.rdd.RDD[Array[String]]\u001b[0m \u003d MapPartitionsRDD[237] at...\n"
+          }
+        ]
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571238137393_1264721942",
+      "id": "paragraph_1571238137393_1264721942",
+      "dateCreated": "2019-10-16 15:02:17.394",
+      "dateStarted": "2019-10-16 15:09:24.125",
+      "dateFinished": "2019-10-16 15:09:45.957",
+      "status": "FINISHED"
+    }
+  ],
+  "name": "kmeans-timeseries-data-example",
+  "id": "2ES7SRFXG",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0-SNAPSHOT",
+  "permissions": {},
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {},
+  "path": "/kmeans-timeseries-data-example"
+}

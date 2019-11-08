@@ -1,0 +1,184 @@
+{
+  "paragraphs": [
+    {
+      "text": "import scala.math.random\n\nval slices \u003d 100\nval n \u003d math.min(100000L * slices, Int.MaxValue).toInt\nval xs \u003d 1 until n\nval rdd \u003d sc.parallelize(xs, slices).setName(\"\u0027Initial rdd\u0027\")\nval sample \u003d rdd.map { i \u003d\u003e\nval x \u003d random * 2 - 1\nval y \u003d random * 2 - 1\n(x, y)\n}.setName(\"\u0027Random points sample\u0027\")\n\nval inside \u003d sample.filter { case (x, y) \u003d\u003e (x * x + y * y \u003c 1) }.setName(\"\u0027Random points inside circle\u0027\")\nval count \u003d inside.count()\nprintln(\"Pi is roughly \" + 4.0 * count / n)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-17 20:24:54.204",
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571162101333_1348625366",
+      "id": "paragraph_1571162101333_1348625366",
+      "dateCreated": "2019-10-15 12:55:01.333",
+      "dateStarted": "2019-10-17 20:24:54.252",
+      "dateFinished": "2019-10-17 20:25:16.548",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%pyspark\nimport random\nNUM_SAMPLES \u003d 10000000\ndef inside(p):\n    x, y \u003d random.random(), random.random()\n    return x*x + y*y \u003c 1\n\ncount \u003d sc.parallelize(range(0, NUM_SAMPLES)).filter(inside).count()\nprint (\"Pi is roughly %f\" % (4.0 * count / NUM_SAMPLES))",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-17 20:25:20.019",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571162972400_-1590580624",
+      "id": "paragraph_1571162972400_-1590580624",
+      "dateCreated": "2019-10-15 13:09:32.401",
+      "dateStarted": "2019-10-17 20:25:20.031",
+      "dateFinished": "2019-10-17 20:25:24.388",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%pyspark\nimport matplotlib.pyplot as plt\nplt.plot([1, 6, 3])\nplt.figure()\nz.show(plt)\nx \u003d [0, 2, 4, 6, 8]\ny \u003d [0, 3, 3, 7, 0]\nplt.plot(x, y)\nz.show(plt)\nplt.savefig(\u0027MyFirstPlot.png\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-17 20:11:43.919",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571162152139_-1123764368",
+      "id": "paragraph_1571162152139_-1123764368",
+      "dateCreated": "2019-10-15 12:55:52.139",
+      "dateStarted": "2019-10-17 20:11:43.926",
+      "dateFinished": "2019-10-17 20:11:44.845",
+      "status": "FINISHED"
+    },
+    {
+      "text": "%pyspark\nimport matplotlib.pyplot as plt\nplt.close() # Added here to reset the plot when rerunning the paragraph\nz.configure_mpl(angular\u003dTrue, close\u003dFalse)\nplt.plot([1, 2, 3], label\u003dr\u0027$y\u003dx$\u0027)",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-17 20:11:54.456",
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9.0,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571163969816_-1489612948",
+      "id": "paragraph_1571163969816_-1489612948",
+      "dateCreated": "2019-10-15 13:26:09.816",
+      "dateStarted": "2019-10-17 20:11:54.462",
+      "dateFinished": "2019-10-17 20:11:54.762",
+      "status": "FINISHED"
+    },
+    {
+      "text": "var df \u003d spark.read.option(\"multiline\", true).json(\"/usr/share/hadoop/yarn/yarn-service-examples/sleeper/*.json\")\ndf.printSchema()",
+      "user": "anonymous",
+      "dateUpdated": "2019-10-17 21:42:18.805",
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12.0,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9.0,
+        "editorHide": false,
+        "runOnSelectionChange": true,
+        "title": false,
+        "checkEmpty": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1571164174530_2054968804",
+      "id": "paragraph_1571164174530_2054968804",
+      "dateCreated": "2019-10-15 13:29:34.530",
+      "dateStarted": "2019-10-17 20:26:53.846",
+      "dateFinished": "2019-10-17 20:26:56.793",
+      "status": "FINISHED"
+    }
+  ],
+  "name": "usecase_tutorial_dars",
+  "id": "2EPFTGY5M",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.9.0-SNAPSHOT",
+  "permissions": {},
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false
+  },
+  "info": {},
+  "path": "/usecase_tutorial_dars"
+}
