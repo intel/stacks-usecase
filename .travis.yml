@@ -1,32 +1,56 @@
-language: python
 dist: xenial
-python:
-- '3.7'
-
 sudo: required
-
 services:
-  - docker  
+  - docker
 
-cache:
-  directories:
-    - /home/travis/.cache/
-    - /home/travis/.local/
+matrix:
+  include:
+    - language: python
+      python: 3.7
 
-before_install:
-- mkdir -p /home/travis/.cache/
-- mkdir -p /home/travis/.local/bin/
-- pip install coverage codecov sphinx sphinxcontrib-asyncio black sphinx_rtd_theme
+      cache:
+        directories:
+          - /home/travis/.cache/
+          - /home/travis/.local/
 
-script:
-  - ./.ci/run.sh
-  - cd pix2pix/
-  - make
+      before_install:
+      - mkdir -p /home/travis/.cache/
+      - mkdir -p /home/travis/.local/bin/
+      - pip install coverage codecov sphinx sphinxcontrib-asyncio black sphinx_rtd_theme
 
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  on:
-    branch: master
+      script:
+        - echo "./.ci/run.sh"
+        - cd pix2pix/
+        - echo "make"
+
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: $GITHUB_TOKEN
+        keep_history: true
+        on:
+          branch: master
+
+    - language: java
+      jdk: openjdk8
+      cache:
+        directories:
+        - $HOME/.m2
+      before_install:
+        - sudo apt-get update
+        - sudo apt-get remove scala-library scala
+        - sudo wget https://downloads.lightbend.com/scala/2.12.8/scala-2.12.8.deb
+        - sudo dpkg -i scala-2.12.8.deb
+        - sudo apt-get update
+        - sudo apt-get install scala
+        - scala -version
+        - sudo apt-get install npm
+        - sudo npm i npm@latest -g
+      script:
+        - MAIN_FOLDER=$(pwd)
+        - cd ${MAIN_FOLDER}/zeppelin-notebook/
+        - ./stacks-zeppelin.sh -a build_zeppelin
+        - ls -l
+        - sudo ./stacks-zeppelin.sh -a copy_files
+        - sudo ./stacks-zeppelin.sh -a build_image
+        - ./stacks-zeppelin.sh -a start_zeppelin
