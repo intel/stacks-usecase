@@ -25,7 +25,7 @@ You should first pull the DLRS template for OpenFaaS
 >NOTE: The template will be pulled inside your working directory; you should cd into `stacks-usecase/pix2pix/openfaas/` before running the next commands so that `faas-cli` is able to find all needed files.
 
 ```bash
-$ faas-cli template pull [DLRSL template for OpenFaaS]
+$ faas-cli template pull https://github.com/intel/stacks-templates-openfaas.git
 ```
 
 #### Insert your pre-trained model into the Docker image
