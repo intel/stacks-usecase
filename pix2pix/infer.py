@@ -15,9 +15,7 @@ from tensorflow.keras import backend
 from tensorflow.keras.models import load_model
 
 
-from scripts.helper import get_directory
-from scripts.helper import get_cpuinfo
-from scripts.helper import reverse_norm
+from scripts.helper import get_directory, get_cpuinfo, norm_data, reverse_norm
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
