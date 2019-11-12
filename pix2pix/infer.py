@@ -17,6 +17,7 @@ from tensorflow.keras.models import load_model
 
 from scripts.helper import get_directory
 from scripts.helper import get_cpuinfo
+from scripts.helper import norm_data
 from scripts.helper import reverse_norm
 
 logging.basicConfig(level=logging.DEBUG)
@@ -47,8 +48,9 @@ def infer(img):
     backend.clear_session()
     gen_model = load_model(home_dir + "/models/generator_model.h5", compile=False)
     img = np.array(Image.open(img))
+    img = norm_data([img])
     s_time = time.time()
-    result = gen_model.predict(img.reshape(1, 256, 256, 3))
+    result = gen_model.predict(img[0].reshape(1, 256, 256, 3))
     f_time = time.time()
     logger.info(
         "\033[92m"
