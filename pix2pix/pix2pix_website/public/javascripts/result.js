@@ -1,3 +1,4 @@
+'use strict';
 import {LitElement, html, css} from './lit-element.min.js';
 
 class Result extends LitElement {
@@ -5,12 +6,15 @@ class Result extends LitElement {
     static get properties() {
       return {
         done: { type: Boolean },
+        origImg: { type: String },
         startImg: { type: String },
         renderedImg: { type: String },
         classes: { type: String },
         styles: { type: String },
         height: { type: String },
-        callback: {type: Function }
+        callback: {type: Function },
+        reqID: { type: Number },
+        addEdit: {type: Boolean }
       };
     }
 
@@ -32,19 +36,43 @@ class Result extends LitElement {
         #images {
           display: flex;
           align-items: center;
-          height: 95%;
+          min-height: 85%;
           width: 100%;
           justify-content: space-evenly;
           box-sizing: border-box;
         }
 
-        #performance {
-          height: 4%;
-          width: 100%;
+        #editBtn {
+          width: 12%;
+          margin: 15px;
           text-align: center;
-          font-family: monospace;
+          box-shadow:inset 0px 1px 0px 0px #ffffff;
+          background-color:#f9f9f9;
+          border-radius:6px;
+          cursor:pointer;
+          color:#ffffff;
+          font-family:Arial;
+          font-size:20px;
+          font-weight:bold;
+          padding:11px 21px;
+          text-shadow:1px 3px 3px #000000;
+          background:linear-gradient(to bottom, #404040 5%, #4dff00 100%);
+          display: none;
         }
 
+        #editBtn:hover {
+          background:linear-gradient(to bottom, #e9e9e9 5%, #8cff8a 100%);
+          box-shadow: 0px 1px 5px 5px #88ff599c;
+          background-color:#e9e9e9;
+        }
+
+        #origImg {
+          display: none;
+        }
+
+        .editEnabled {
+          display: block;
+        }
         .imgDiv {
             display: flex;
           align-items: center;
@@ -101,11 +129,14 @@ class Result extends LitElement {
     constructor() {
       super();
       this.done = false;
+      this.origImg = "";
       this.startImg = "";
       this.renderedImg = "";
       this.classes = "";
       this.styles = "";
       this.resultText = "Render times\n Unoptimized: 3934ms\n Optimized: 2482ms";
+      this.addEdit = false;
+      this.reqID = -1; // Allows us to match up which starting image the incoming rendered image is for.
     }
 
     render() {
@@ -122,9 +153,36 @@ class Result extends LitElement {
             }
             </div>
         </div>
-        <div id='performance'>${this.resultText}</div>
+        <button id="editBtn" class=customButton @click="${this.editClick}">Edit</button>
       </div>
+      <img id='origImg' src=${this.origImg} draggable="false">
       `;
+    }
+    firstUpdated() {
+      if (this.addEdit === true) {
+        this.enableEdit();
+      }
+    }
+
+    enableEdit() {
+      this.shadowRoot.getElementById("editBtn").style.display = "block";
+    }
+
+    disableEdit() {
+      this.shadowRoot.getElementById("editBtn").style.display = "none";
+    }
+
+    editClick() {
+      // Make an event containing the original image URL
+      let event = new CustomEvent('editDrawing', {
+        detail: {
+          message: 'Open drawing to edit.',
+          imgData: this.shadowRoot.getElementById("origImg")
+        },
+        bubbles: true,
+        composed: true
+      });
+      this.dispatchEvent(event);
     }
   }
 

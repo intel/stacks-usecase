@@ -1,3 +1,4 @@
+'use strict';
 import {LitElement, html, css} from './lit-element.min.js';
 
 class ItemGrid extends LitElement {
@@ -52,7 +53,7 @@ class ItemGrid extends LitElement {
       }.bind(this)).then(function(json){
         // Take the JSON reply and populate the image array.
         this.imgArr = [];
-        for (var i = 0; i < json.children.length; i++) {
+        for (let i = 0; i < json.children.length; i++) {
           this.imgArr[i] = {imgSrc: "../images/" + json.children[i].name, filename: json.children[i].name};
         }
       }.bind(this));
