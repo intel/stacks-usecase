@@ -1,3 +1,4 @@
+'use strict';
 import {LitElement, html, css} from './lit-element.min.js';
 class DrawPage extends LitElement {
 
@@ -14,6 +15,7 @@ class DrawPage extends LitElement {
       lastMouseX: { type: Number },
       lastMouseY: { type: Number },
       mousedown: { type: Boolean },
+      editImg: {type: Object },
       color: { type: String }
     };
   }
@@ -62,6 +64,7 @@ class DrawPage extends LitElement {
     super();
     this.mousedown = false;
     this.mouseX = this.mouseY = this.lastMouseX = this.lastMouseY = 0;
+    this.editImg = undefined;
   }
 
   render() {
@@ -90,6 +93,14 @@ class DrawPage extends LitElement {
     this.smallCVS.height = 256;
 
     this.clearScreen();
+    // Display the image to edit if given one, otherwise create a blank canvas
+    if (this.editImg !== undefined) {
+      // pre-made images are smaller than the canvas, turn off smoothing to prevent too much blur
+      this.preCTX.imageSmoothingEnabled = false;
+      this.preCTX.drawImage(this.editImg, 0, 0, this.preCVS.width, this.preCVS.height);
+      // Reset the edit file
+      this.editImg = undefined;
+    }
   }
 
   // A colorselected event was received from the color-select element, set the color using its data.

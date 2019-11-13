@@ -1,3 +1,4 @@
+'use strict';
 import {LitElement, html, css} from './lit-element.min.js';
 
 class HistoryBar extends LitElement {
@@ -45,7 +46,7 @@ class HistoryBar extends LitElement {
     render() {
       return html`
       <div id="grid">
-          ${this.resultArr.map(i => html`<result-item id=${i.name} done=true startImg=${i.image} renderedImg=${i.rendPath}></result-item>`)}
+          ${this.resultArr.map(i => html`<result-item id=${i.name} done=true reqID=${i.reqID} startImg=${i.image} renderedImg=${i.rendPath} origImg=${i.origPath}></result-item>`)}
       </div>
       `;
     }
@@ -57,8 +58,8 @@ class HistoryBar extends LitElement {
     }
 
     // Add an item to the history array
-    setItem(path, rendPath) {
-      this.resultArr[this.currIndex] = {'name': this.currIndex, 'image': path, 'rendPath': rendPath};
+    setItem(reqID, path, rendPath, origPath) {
+      this.resultArr[this.currIndex] = {'reqID': reqID, 'name': this.currIndex, 'image': path, 'rendPath': rendPath, 'origPath': origPath};
       this.currIndex++;
       this.requestUpdate();
     }

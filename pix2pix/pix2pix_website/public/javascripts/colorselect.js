@@ -166,13 +166,13 @@ class ColorSelect extends LitElement {
       var smallCVS = this.parentNode.children.smallCanvas;
       var smallCTX = smallCVS.getContext("2d");
       smallCTX.drawImage(this.parentNode.children.preImage, 0, 0, 256, 256);
+      var preCVS = this.parentNode.children.preImage;
       var dataBuffer = smallCVS.toDataURL('image/jpg');
-      var formData = new FormData();
-      formData.append("type", "BUFFER");
-
+      var origBuffer = preCVS.toDataURL('image/jpg');
       let event = new CustomEvent('newdrawing', {
         detail: {
           message: 'Drawing rendering..',
+          origBuff: origBuffer,
           imgBuff: dataBuffer
         },
         bubbles: true,

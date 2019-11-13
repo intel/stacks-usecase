@@ -1,3 +1,4 @@
+'use strict';
 import {LitElement, html, css} from './lit-element.min.js';
 import './draw.js';
 import './result.js';
@@ -17,7 +18,7 @@ class PixDemoApp extends LitElement {
 
   constructor() {
     super();
-    this.reqID = 0; // Allows us to match up which starting image the incoming rendered image is for.
+    this.reqID = 0; // Request ID number tracker
   }
 
   static get styles() {
@@ -137,8 +138,8 @@ class PixDemoApp extends LitElement {
         <button id="imageSelect" class="customButton enabled"  @click="${this.toggleImgSelect}">Image Select</button>
         <button id="histBtn" class="customButton enabled" @click="${this.toggleHistory} ">History</button>
       </div>
-      <result-item id="selectedResult" class='page'}></result-item>
-      <result-bar id="historyBar" class='page' @click=${this.maincb}></result-bar>
+      <result-item id="selectedResult" class='page' @editDrawing=${this.editDrawing}></result-item>
+      <result-bar id="historyBar" class='page' @click=${this.histSelected}></result-bar>
       <item-grid id="imgGrid" class='page' @click=${this.imgSelected} @renderimage=${this.renderImage}></item-grid>
       <draw-page id="drawPage" class='page' @renderimage=${this.renderImage} @newdrawing=${this.newDrawing}></draw-page>
     </div>
@@ -159,17 +160,21 @@ class PixDemoApp extends LitElement {
     openEl.classList.add('open');
   }
 
-  maincb(ev) {
+  histSelected(ev) {
     var selRes = this.shadowRoot.getElementById('selectedResult');
+    selRes.enableEdit();
     var ri = ev.composedPath().find(function(i) { return i.tagName == "RESULT-ITEM";});
     selRes.startImg = ri.startImg;
+    selRes.origImg = ri.origImg;
     selRes.done = true;
     selRes.renderedImg = ri.renderedImg;
+    selRes.reqID = ri.reqID;
     this.openView('selectedResult');
   }
 
   imgSelected(ev) {
     var selRes = this.shadowRoot.getElementById('selectedResult');
+    selRes.disableEdit();
     var ri = ev.composedPath().find(function(i) { return i.tagName == "IMG";});
     this.openView('selectedResult');
     selRes.startImg = "../images/" + ri.getAttribute('data-filename');
@@ -200,7 +205,6 @@ class PixDemoApp extends LitElement {
   }
 
   toggleImgSelect() {
-    console.log("Clicking the open file");
     var imgSel = this.shadowRoot.getElementById('imgGrid');
     if (!imgSel.classList.contains('open')) {
       this.openView('imgGrid');
@@ -227,11 +231,13 @@ class PixDemoApp extends LitElement {
       var selRes = this.shadowRoot.getElementById('selectedResult');
       // If the currently visible result is the one we got a result for, update it
       if (selRes.reqID === Number(replyJson.reqID)) {
-        selRes.renderedImg = replyJson.renderedPath + '?' + nocache;
+        selRes.renderedImg = replyJson.renderedPath + nocache;
+        selRes.origImg = replyJson.origPath + nocache;
         selRes.done = true;
+        selRes.enableEdit();
       }
       // Add result to the history
-      this.shadowRoot.getElementById('historyBar').setItem(replyJson.startPath + nocache, replyJson.renderedPath + nocache);
+      this.shadowRoot.getElementById('historyBar').setItem(Number(replyJson.reqID), replyJson.startPath + nocache, replyJson.renderedPath + nocache, replyJson.origPath + nocache);
     }.bind(this));
 
   }
@@ -239,6 +245,7 @@ class PixDemoApp extends LitElement {
   newDrawing(ev) {
     var imgBuff = ev.detail.imgBuff;
     var selRes = this.shadowRoot.getElementById('selectedResult');
+    selRes.disableEdit();
     selRes.startImg = imgBuff;
     selRes.done = false;
     selRes.reqID = this.reqID;
@@ -247,6 +254,7 @@ class PixDemoApp extends LitElement {
     var formData = new FormData();
     formData.append("type", "BUFFER");
     formData.append("imgData", ev.detail.imgBuff);
+    formData.append("origData", ev.detail.origBuff);
     formData.append("reqID", this.reqID++);
     // Send the data buffer to the server to be rendered
     fetch('/render', {
@@ -257,6 +265,13 @@ class PixDemoApp extends LitElement {
       console.log(res);
       this.renderImage(res);
     }.bind(this));
+  }
+
+  editDrawing(ev) {
+    // Get and pass the original image for editing from the event.
+    var drawPage = this.shadowRoot.getElementById('drawPage');
+    drawPage.editImg = ev.detail.imgData;
+    this.toggleDraw();
   }
 }
 
