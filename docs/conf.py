@@ -12,13 +12,14 @@ author = "unrahul"
 version = "0.0.1"
 release = version
 extensions = [
+    "sphinx.ext.githubpages",
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
     "sphinxcontrib.asyncio",
 ]
 intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
-html_theme = "sphinx_rtd_theme"
+html_theme = "alabaster"
 
 html_theme_options = {
     "description": "End to End Deep Learning usecases using Intel System Stacks",
@@ -35,3 +36,4 @@ html_theme_options = {
 }
 
 
+master_doc = 'index'
