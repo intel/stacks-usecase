@@ -16,8 +16,8 @@ Artists are faced with the challenge of effectively synthesizing photos from lab
 
 
 
-.. image:: ./images/example.jpg
-   :target: ./images/example.jpg
+.. image:: ../images/example.jpg
+   :target: ../images/example.jpg
    :alt: output_target_input
 
 

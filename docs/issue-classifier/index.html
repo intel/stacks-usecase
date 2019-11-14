@@ -1,0 +1,431 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Github Issue Classification Usecase &#8212; stacks-usecase 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="DLRS template for OpenFaaS" href="../faas/index.html" />
+    <link rel="prev" title="PIX 2 PIX" href="../pix2pix/index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="github-issue-classification-usecase">
+<h1>Github Issue Classification Usecase<a class="headerlink" href="#github-issue-classification-usecase" title="Permalink to this headline">¶</a></h1>
+<p>This end-to-end use case uses the <a class="reference external" href="https://clearlinux.org/stacks/data-analytics">Data Analytics Reference Stack</a> and the <a class="reference external" href="https://clearlinux.org/stacks/deep-learning">Deep Learning Reference Stack</a> to walk through a classification example, using data from GitHub* to show how Machine Learning can analyze and tag new issues to save time for developers who are creating issues, and to ensure the issues come to the attention of the right audience through correct tagging.</p>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Github issues are currently manually classified, but why not automate the tagging process? A simple ML algorithm can be used to analyze the issue content and tag it automatically, saving time for developers and directing their focus to critical issues. This usecase shows the user how to do exactly that.</p>
+<p>To run the usecase locally, follow the steps below. You will need to manually preprocess the data using <a class="reference external" href="https://hub.docker.com/r/clearlinux/stacks-dars-mkl">DARS</a> container which is an optimized spark container, train the data with <a class="reference external" href="https://hub.docker.com/r/clearlinux/stacks-dars-mkl">DLRS</a> which is a deep learning container, then serve it with rest.py, and run the frontend within the website folder.</p>
+<p>If you would prefer a simple walkthrough with a jupyter notebook, feel free to explore github-notebook.ipynb. It is a self contained and simplified example of this usecase. Instructions to use are located below under “Training the Model using DLRS and Jupyter Notebooks”</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>To install and use the Data Analytics Reference Stack (DARS), refer <a class="reference external" href="https://docs.01.org/clearlinux/latest/guides/stacks/dars.html">here</a></p>
+<p>To install and use the Deep Learning Refence Stack (DLRS), refer <a class="reference external" href="https://docs.01.org/clearlinux/latest/tutorials/dlrs.html">here</a></p>
+<div class="section" id="table-of-contents">
+<h3>Table of contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>data</p>
+<ul>
+<li><p>Where the raw and clean data is stored</p></li>
+</ul>
+</li>
+<li><p>kubeflow</p>
+<ul>
+<li><p>All cloud uses and implementations are here</p></li>
+</ul>
+</li>
+<li><p>models</p>
+<ul>
+<li><p>Where Machine Learning and vectorizer models are stored</p></li>
+</ul>
+</li>
+<li><p>scripts</p>
+<ul>
+<li><p>A bash script to retrieve data, and a scala script to process the data</p></li>
+</ul>
+</li>
+<li><p>website</p>
+<ul>
+<li><p>A flask based server that displays a front end on
+host to interact with the model</p></li>
+</ul>
+</li>
+<li><p>Dockerfile</p>
+<ul>
+<li><p>Builds an image based on DLRS that will automatically run rest.py</p></li>
+</ul>
+</li>
+<li><p>Makefile</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">make</span></code> command instructions for <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code></p></li>
+</ul>
+</li>
+<li><p>config.make</p>
+<ul>
+<li><p>Configurations for the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code></p></li>
+</ul>
+</li>
+<li><p>github-notebook.ipynb</p>
+<ul>
+<li><p>A user friendly walkthrough and explanation of what’s happening in <code class="docutils literal notranslate"><span class="pre">train.py</span></code></p></li>
+</ul>
+</li>
+<li><p>requirements.txt</p>
+<ul>
+<li><p>Requirements needed in the DLRS image during inference</p></li>
+</ul>
+</li>
+<li><p>rest.py</p>
+<ul>
+<li><p>This file runs a RESTful API server that receives issue content and returns labels</p></li>
+</ul>
+</li>
+<li><p>train.py</p>
+<ul>
+<li><p>This file trains the model</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="local-container-walkthrough">
+<h3>Local Container Walkthrough<a class="headerlink" href="#local-container-walkthrough" title="Permalink to this headline">¶</a></h3>
+<p>Clone this repo and pull the DARS container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/intel/stacks-usecase
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull clearlinux/stacks-dars-mkl:latest
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> stacks-usecase/github-issue-classification
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it --ulimit <span class="nv">nofile</span><span class="o">=</span><span class="m">1000000</span>:1000000 -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/workdir clearlinux/stacks-dars-mkl bash
+</pre></div>
+</div>
+<div class="section" id="prepare-the-spark-environment">
+<h4>Prepare the spark environment<a class="headerlink" href="#prepare-the-spark-environment" title="Permalink to this headline">¶</a></h4>
+<p>In this section we will prepare our Spark environment using DARS.</p>
+<p>First, create the output directory if it doesn’t exist</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /workdir
+mkdir /data
+mkdir /data/raw
+</pre></div>
+</div>
+<p>Change the “get-data.sh” script to an executable and execute it to retrieve clearlinux issues data</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> /workdir/scripts
+chmod u+x get-data.sh
+./get-data.sh
+<span class="nb">cd</span> /workdir
+</pre></div>
+</div>
+<p>Note that you must be in the /workdir directory before starting Spark.</p>
+<p>Run the spark shell</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>spark-shell
+</pre></div>
+</div>
+</div>
+<div class="section" id="process-the-data">
+<h4>Process the data<a class="headerlink" href="#process-the-data" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>Import session and instantiate a spark context</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>import org.apache.spark.sql.SparkSession
+val <span class="nv">spark</span> <span class="o">=</span> SparkSession.builder.appName<span class="o">(</span><span class="s2">&quot;github-issue-classification&quot;</span><span class="o">)</span>.getOrCreate<span class="o">()</span>
+import spark.implicits._
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p>Load the data to a spark dataframe
+.. code-block:: bash</p>
+<blockquote>
+<div><p>var df = spark.read.option(“multiline”, true).json(“data/raw/<a href="#id2"><span class="problematic" id="id3">*</span></a>.json”)</p>
+</div></blockquote>
+</li>
+<li><p>Select the labels, name, body, and id columns
+.. code-block:: bash</p>
+<blockquote>
+<div><p>df = df.select(col(“body”), col(“id”), col(“labels.name”))</p>
+</div></blockquote>
+</li>
+<li><p>Explode the labels column to prepare for filtering the top labels
+.. code-block:: bash</p>
+<blockquote>
+<div><p>var df2 = df.select(col(“id”),explode(col(“name”)).as(“labels”))</p>
+</div></blockquote>
+</li>
+<li><p>Order the Labels by frequency
+.. code-block:: bash</p>
+<blockquote>
+<div><p>var df3 = df2.select(“labels”).groupBy(“labels”).count().orderBy(col(“count”).desc).limit(10).select(“labels”)</p>
+</div></blockquote>
+</li>
+<li><p>Turn the top labels into a list (to put into the next step)
+.. code-block:: bash</p>
+<blockquote>
+<div><p>var list = df3.select(“labels”).map(r =&gt; r.getString(0)).collect.toList</p>
+</div></blockquote>
+</li>
+<li><p>Filter the top labels
+.. code-block:: bash</p>
+<blockquote>
+<div><p>df2 = df2.filter($”labels”.isin(list:_*))</p>
+</div></blockquote>
+</li>
+<li><p>Recombine the top labels
+.. code-block:: bash</p>
+<blockquote>
+<div><p>df2 = df2.groupBy(“id”).agg(collect_set(“labels”).alias(“labels”))</p>
+</div></blockquote>
+</li>
+<li><p>Take intersection of label ids and body ids to get final list
+.. code-block:: bash</p>
+<blockquote>
+<div><p>df = df.join(df2, “id”).select(“body”,”labels”)</p>
+</div></blockquote>
+</li>
+<li><p>Save the data
+.. code-block:: bash</p>
+<blockquote>
+<div><p>df.write.json(“data/tidy/”)</p>
+</div></blockquote>
+<p>Or, from within the spark shell run:
+.. code-block:: bash</p>
+<blockquote>
+<div><p>:load -v scripts/proc-data.scala</p>
+</div></blockquote>
+<p>The proc-data.scala script performs all the steps 2-10 described above.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="train-a-model-using-dlrs">
+<h4>Train a model using DLRS<a class="headerlink" href="#train-a-model-using-dlrs" title="Permalink to this headline">¶</a></h4>
+<p>In this section we will train a model using DLRS in preparation for serving it.</p>
+<ol class="arabic">
+<li><p>If you have not done so already, clone the usecases repo into your local workspace
+.. code-block:: bash</p>
+<blockquote>
+<div><p>git clone <a class="reference external" href="https://github.com/intel/stacks-usecase">https://github.com/intel/stacks-usecase</a></p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> stacks-usecase/github-issue-classification
+</pre></div>
+</div>
+</li>
+<li><p>Pull and run the Deep Learning Reference Stack (DLRS)
+.. code-block:: bash</p>
+<blockquote>
+<div><p>docker pull clearlinux/stacks-dlrs-mkl</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -it -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/workdir clearlinux/stacks-dlrs-mkl
+</pre></div>
+</div>
+</li>
+<li><p>Navigate to the github usecase and install requirements
+.. code-block:: bash</p>
+<blockquote>
+<div><p>cd /workdir/docker</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -r requirements_train.txt
+</pre></div>
+</div>
+</li>
+<li><p>Create the output directory
+.. code-block:: bash</p>
+<blockquote>
+<div><p>mkdir /workdir/models</p>
+</div></blockquote>
+</li>
+<li><p>Run the training script
+.. code-block:: bash</p>
+<blockquote>
+<div><p>cd /workdir/python</p>
+</div></blockquote>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python train.py
+</pre></div>
+</div>
+</li>
+</ol>
+<p>That’s it! At its core, DLRS does not require that you change your code. Once the environment is set up (steps 1-4), a single call to your code will run as expected, and it will utilize Intel optimizations. This is the base functionality of DLRS, and most implementations will be built off this example section.</p>
+</div>
+<div class="section" id="serve-the-model">
+<h4>Serve the model<a class="headerlink" href="#serve-the-model" title="Permalink to this headline">¶</a></h4>
+<p>To run inference, we’ve set up a special dockerfile based on our image. The dockerfile creates a RESTful API that will communicate to a local flask server to run live inference.</p>
+<p>From your local system, navigate to the github-issues-classification folder, where “Dockerfile” is stored inside the “docker” directory, and run:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>make
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker run -p <span class="m">5059</span>:5059 -it github_issue_classifier:latest
+</pre></div>
+</div>
+<p>It may seem like nothing happened, but with a few commands a REST API has been created running out of a docker container.</p>
+<p>Now run one last step in a second terminal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ../website
+flask run
+</pre></div>
+</div>
+<p>This will create a flask server on your local system. Open your favorite browser and navigate to localhost:5000 to see an interactive example of the guthub issues usecase. Simply copy or type any issue into the top left box, and hit submit. The flask server will call the REST API, which will process your input and return the appropriate labels.</p>
+</div>
+</div>
+<div class="section" id="training-the-model-using-dlrs-and-jupyter-notebooks">
+<h3>Training the Model using DLRS and Jupyter Notebooks<a class="headerlink" href="#training-the-model-using-dlrs-and-jupyter-notebooks" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p>Pull and run the Deep Learning Reference Stack (DLRS). You will need to mount it to disk and connect a jupyter notebook port.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker pull clearlinux/stacks-dlrs-mkl
+docker run -it -v <span class="si">${</span><span class="nv">PWD</span><span class="si">}</span>:/workdir -p <span class="m">8888</span>:8888 clearlinux/stacks-dlrs-mkl
+</pre></div>
+</div>
+</li>
+<li><p>From within the container, navigate to the workspace, install sklearn, and start a jupyter notebook that is linked to the exterior port. Make sure to copy the token from the output.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ../workdir
+pip install sklearn
+jupyter notebook --ip <span class="m">0</span>.0.0.0 --no-browser --allow-root
+</pre></div>
+</div>
+</li>
+<li><p>Open a browser and navigate to localhost:8888. If the notebook asks for a token, paste the token from the previous step and submit. You now have a notebook running out of DLRS that can access any local files. We have a jupyter notebook prebuilt for you.</p></li>
+</ol>
+<p><strong>NOTE</strong>: If you get a ‘hit rate limits’ error when fetching raw json file from github API, you have to add the <code class="docutils literal notranslate"><span class="pre">-u</span> <span class="pre">&quot;&lt;github</span> <span class="pre">username&gt;&quot;</span></code> option to curl</p>
+</div>
+<div class="section" id="mailing-list">
+<h3>Mailing List<a class="headerlink" href="#mailing-list" title="Permalink to this headline">¶</a></h3>
+<p>See our public <a class="reference external" href="https://lists.01.org/mailman/listinfo/stacks">mailing list</a> page for details on how to contact us. You should only subscribe to the Stacks mailing lists using an email address that you don’t mind being public.</p>
+</div>
+<div class="section" id="reporting-security-issues">
+<h3>Reporting Security Issues<a class="headerlink" href="#reporting-security-issues" title="Permalink to this headline">¶</a></h3>
+<p>Security issues can be reported to Intel’s security incident response team via <a class="reference external" href="https://intel.com/security">https://intel.com/security</a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">stacks-usecase</a></h1>
+
+
+
+<p class="blurb">End to End Deep Learning usecases using Intel System Stacks</p>
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=intel&repo=stacks-usecase&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/intel/stacks-usecase">
+    <img
+        alt="https://secure.travis-ci.org/intel/stacks-usecase.svg?branch=master"
+        src="https://secure.travis-ci.org/intel/stacks-usecase.svg?branch=master"
+    />
+</a>
+</p>
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://codecov.io/github/intel/stacks-usecase">
+    <img
+    alt="https://codecov.io/github/intel/stacks-usecase/coverage.svg?branch=master"
+    src="https://codecov.io/github/intel/stacks-usecase/coverage.svg?branch=master"
+    />
+</a>
+</p>
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../pix2pix/index.html">PIX 2 PIX</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Github Issue Classification Usecase</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faas/index.html">DLRS template for OpenFaaS</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../pix2pix/index.html" title="previous chapter">PIX 2 PIX</a></li>
+      <li>Next: <a href="../faas/index.html" title="next chapter">DLRS template for OpenFaaS</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Intel.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/issue-classifier/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
