@@ -1,0 +1,37 @@
+# Configuration file for the Sphinx documentation builder.
+import os
+import sys
+
+sys.path.insert(0, os.path.abspath("."))
+
+project = "stacks-usecase"
+copyright = "2019, Intel"
+author = "unrahul"
+
+# The short X.Y version
+version = "0.0.1"
+release = version
+extensions = [
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.viewcode",
+    "sphinxcontrib.asyncio",
+]
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
+html_theme = "sphinx_rtd_theme"
+
+html_theme_options = {
+    "description": "End to End Deep Learning usecases using Intel System Stacks",
+    "github_user": "intel",
+    "github_repo": "stacks-usecase",
+    "github_button": True,
+    "travis_button": True,
+    "codecov_button": True,
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False
+}
+
+
