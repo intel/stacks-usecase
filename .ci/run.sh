@@ -3,11 +3,6 @@
 set -e
 rm -rf pages
 
-# HTTP Service
-mkdir -p docs/plugins/service/
-rm -f docs/plugins/service/http
-ln -s "${PWD}/service/http/docs/" docs/plugins/service/http
-
 # generate docs
 sphinx-build -b html docs pages
 find pages/ -name \*.html -exec \
