@@ -1,8 +1,24 @@
+language: python
+dist: xenial
+python:
+- '3.7'
+
 sudo: required
 
 services:
-  - docker
-  
+  - docker  
+
+cache:
+  directories:
+    - /home/travis/.cache/
+    - /home/travis/.local/
+
+before_install:
+- mkdir -p /home/travis/.cache/
+- mkdir -p /home/travis/.local/bin/
+- pip install coverage codecov sphinx sphinxcontrib-asyncio black sphinx_rtd_theme
+
 script:
+  - ./.ci/run.sh
   - cd pix2pix/
   - make
