@@ -16,7 +16,6 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.autodoc",
     "sphinx.ext.viewcode",
-    "sphinxcontrib.asyncio",
 ]
 intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 html_theme = "alabaster"
@@ -28,11 +27,6 @@ html_theme_options = {
     "github_button": True,
     "travis_button": True,
     "codecov_button": True,
-    'collapse_navigation': True,
-    'sticky_navigation': True,
-    'navigation_depth': 4,
-    'includehidden': True,
-    'titles_only': False
 }
 
 
