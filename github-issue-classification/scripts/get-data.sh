@@ -27,7 +27,7 @@ run() {
 # install required bundles
 install_reqs () {
   swupd bundle-add jq curl
-  pip install jupyter
+  pip install jupyter pandas sklearn
   echo "Installed jq, curl and jupyter"
   echo "Run jupyter  notebook --ip=0.0.0.0 --port=8888 --allow-root to initiate a jupyter notebook"
 }
