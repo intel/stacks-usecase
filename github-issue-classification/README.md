@@ -62,7 +62,7 @@ docker pull clearlinux/stacks-dars-mkl:latest
 cd stacks-usecase/github-issue-classification
 ```
 ```bash
-docker run -it --ulimit nofile=1000000:1000000 -v ${PWD}:/workdir clearlinux/stacks-dars-mkl bash
+docker run -p 8888:8888 -it --ulimit nofile=1000000:1000000 -v ${PWD}:/workdir clearlinux/stacks-dars-mkl bash
 ```
 
 #### Prepare the spark environment
