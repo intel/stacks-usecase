@@ -6,7 +6,7 @@ set -o pipefail
 
 PAGE=20
 URL="https://api.github.com/repos/clearlinux/distribution/issues"
-DLDIR="/workdir/data/raw/"
+DLDIR="/workdir/data/raw"
 AUTH=""
 
 BANNER="Get github issues data, if no <issues_url> provided, issues from ClearLinux github will be downloaded."
@@ -26,7 +26,7 @@ run() {
 
 # install required bundles
 install_reqs () {
-  swupd bundle-add jq
+  swupd bundle-add jq curl
 }
 
 # curl github issues; if you hit the api ratelimit, use authenticated requests
