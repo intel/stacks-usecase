@@ -1,14 +1,25 @@
 DOCKER_BUILD_CMD?=docker build
-DOCKER_NAME?=github_issue_classifier
-DOCKER_IMAGE?=github_issue_classifier
-DOCKER_FILE?=./Dockerfile
+DOCKER_IMAGE_TRAIN?=github_issue_classifier_train
+DOCKER_IMAGE_INFER?=github_issue_classifier
+DOCKER_FILE_TRAIN?=./Dockerfile.train
+DOCKER_FILE_INFER?=./Dockerfile.infer
 DOCKER_WS=../
 
 all .DEFAULT:
-		$(DOCKER_BUILD_CMD)  -f $(DOCKER_FILE) -t $(DOCKER_IMAGE)  $(DOCKER_WS)
+		$(MAKE) infer train
+
+infer: 
+		$(DOCKER_BUILD_CMD)  -f $(DOCKER_FILE_INFER) -t $(DOCKER_IMAGE_INFER)  $(DOCKER_WS)
+
+train: 
+		$(DOCKER_BUILD_CMD)  -f $(DOCKER_FILE_TRAIN) -t $(DOCKER_IMAGE_TRAIN)  $(DOCKER_WS)
+
+infer_run:
+	docker run -p 5059:5059 -it $(DOCKER_IMAGE_INFER)
 
 clean:
-		docker rmi $(DOCKER_IMAGE)
+		docker rmi $(DOCKER_IMAGE_TRAIN)
+		docker rmi $(DOCKER_IMAGE_INFER)
 
 .PHONY: $(DEFAULT_TARGETS)
 

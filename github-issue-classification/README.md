@@ -185,24 +185,32 @@ That's it! At its core, DLRS does not require that you change your code. Once th
 #### Serve the model
 To run inference, we've set up a special dockerfile based on our image. The dockerfile creates a RESTful API that will communicate to a local flask server to run live inference.
 
-From your local system, navigate to the github-issues-classification folder, where "Dockerfile" is stored inside the "docker" directory, and run:
+From your local system, navigate to the github-issues-classification folder, where "Dockerfiles" are stored inside the "docker" directory:
+
+To build the training container, run:
 ```bash
-make
-```
-```bash
-docker run -p 5059:5059 -it github_issue_classifier:latest
+make train
 ```
 
-It may seem like nothing happened, but with a few commands a REST API has been created running out of a docker container.
+To build the inference container, run:
+```bash
+make infer
+```
+
+To finally deploy the model for inference using a high performance async REST server, run:
+```bash
+make infer_run
+```
+
+The server is built using [Quart](https://pgjones.gitlab.io/quart/) web microframework and deployed using an ASGI server [Hypercorn](https://pgjones.gitlab.io/hypercorn/) with uvloop
 
 Now run one last step in a second terminal:
 ```bash
 cd ../website
 flask run
 ```
+
 This will create a flask server on your local system. Open your favorite browser and navigate to localhost:5000 to see an interactive example of the guthub issues usecase. Simply copy or type any issue into the top left box, and hit submit. The flask server will call the REST API, which will process your input and return the appropriate labels.
-
-
 
 ## Training the Model using DLRS and Jupyter Notebooks
 

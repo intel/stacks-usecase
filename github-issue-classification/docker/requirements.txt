@@ -1,4 +1,7 @@
 pandas
 sklearn
-flask
-flask-cors
+hypercorn
+uvloop
+hypercorn[uvloop]
+quart
+quart-cors
