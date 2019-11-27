@@ -45,7 +45,7 @@ def get_model(model_name="efficientnet-b0"):
 
 
 def _mkdir(path):
-    """create directories recursievely."""
+    """create directories recursively."""
     try:
         os.makedirs(path)
     except OSError as e:
