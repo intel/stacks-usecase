@@ -37,20 +37,25 @@ matrix:
         directories:
         - $HOME/.m2
       before_install:
-        - sudo apt-get update
-        - sudo apt-get remove scala-library scala
-        - sudo wget https://downloads.lightbend.com/scala/2.12.8/scala-2.12.8.deb
-        - sudo dpkg -i scala-2.12.8.deb
-        - sudo apt-get update
-        - sudo apt-get install scala
-        - scala -version
-        - sudo apt-get install npm
-        - sudo npm i npm@latest -g
+        - |
+          if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep  'zeppelin'
+          then
+            echo "Not running Zeppelin stage, since no files where changed here"
+            exit 0
+          else
+            sudo apt-get update
+            sudo apt-get remove scala-library scala
+            sudo wget https://downloads.lightbend.com/scala/2.12.8/scala-2.12.8.deb
+            sudo dpkg -i scala-2.12.8.deb
+            sudo apt-get update
+            sudo apt-get install scala
+            sudo apt-get install npm
+            sudo npm i npm@latest -g
+          fi
       script:
         - MAIN_FOLDER=$(pwd)
         - cd ${MAIN_FOLDER}/zeppelin-notebook/
         - ./stacks-zeppelin.sh -a build_zeppelin
-        - ls -l
         - sudo ./stacks-zeppelin.sh -a copy_files
         - sudo ./stacks-zeppelin.sh -a build_image
         - ./stacks-zeppelin.sh -a start_zeppelin
