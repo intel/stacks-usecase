@@ -1,0 +1,8 @@
+efficientnet_pytorch
+hypercorn
+hypercorn[uvloop]
+pyimage
+quart
+quart-cors
+rapidjson
+uvloop
