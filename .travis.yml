@@ -19,9 +19,9 @@ matrix:
       - pip install coverage codecov sphinx sphinxcontrib-asyncio black sphinx_rtd_theme
 
       script:
-        - echo "./.ci/run.sh"
+        - ./.ci/run.sh
         - cd pix2pix/
-        - echo "make"
+        - make
 
       deploy:
         provider: pages
