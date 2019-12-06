@@ -30,7 +30,6 @@ from tensorflow.keras.layers import Embedding
 from tensorflow.keras.layers import GRU
 from tensorflow.keras import Sequential
 from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.text import Embedding
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -48,16 +47,16 @@ except KeyError:
     DATADIR = "/workdir/data/tidy/"
 
 
-def _fcn(dim=1000, classes=10, dropout=0.6):
+def _fcn(dim=1000, classes=10, dropout=0.3):
     "fully connected net."
     _model = Sequential()
     _model.add(Dense(dim, input_dim=dim, activation="relu"))
     _model.add(Dropout(dropout))
-    _model.add(Dense(input_dim=dim * 0.7, activation="relu"))
+    _model.add(Dense(dim * 0.7, activation="relu"))
     _model.add(Dropout(dropout))
-    _model.add(Dense(input_dim=dim * 0.7, activation="relu"))
+    _model.add(Dense(dim * 0.7, activation="relu"))
     _model.add(Dropout(dropout))
-    _model.add(Dense(input_dim=dim * 0.5, activation="relu"))
+    _model.add(Dense(dim * 0.5, activation="relu"))
     _model.add(Dropout(dropout))
     _model.add(Dense(10, activation="sigmoid"))
     return _model
