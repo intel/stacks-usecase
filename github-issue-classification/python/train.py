@@ -84,7 +84,7 @@ def model_def(fcn=True, dim=1000):
         model = _fcn(dim=1000, classes=10)
     else:
         model = _rnn(dim=1000, classes=10)
-    model.compile(loss="sparse_categorical_crossentropy",
+    model.compile(loss="binary_crossentropy",
                   optimizer="adam", metrics=["accuracy"])
     return model
 
