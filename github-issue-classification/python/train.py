@@ -67,7 +67,7 @@ def _rnn(dim=1000, classes=10, dropout=0.6):
     _model = Sequential()
     _model.add(Embedding(dim, 64))
     _model.add(GRU(64))
-    _model.add(Dense(input_dim=64, activation="relu"))
+    _model.add(Dense(64, activation="relu"))
     _model.add(Dropout(dropout))
     _model.add(Dense(10, activation="sigmoid"))
     return _model
