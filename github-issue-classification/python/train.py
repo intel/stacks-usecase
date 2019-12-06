@@ -22,9 +22,15 @@ import pickle
 import os
 
 import pandas as pd
+import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.layers import GRU
+from tensorflow.keras import Sequential
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.text import Embedding
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
@@ -41,20 +47,57 @@ try:
 except KeyError:
     DATADIR = "/workdir/data/tidy/"
 
+
+def _fcn(dim=1000, classes=10, dropout=0.6):
+    "fully connected net."
+    _model = Sequential()
+    _model.add(Dense(dim, input_dim=dim, activation="relu"))
+    _model.add(Dropout(dropout))
+    _model.add(Dense(input_dim=dim * 0.7, activation="relu"))
+    _model.add(Dropout(dropout))
+    _model.add(Dense(input_dim=dim * 0.7, activation="relu"))
+    _model.add(Dropout(dropout))
+    _model.add(Dense(input_dim=dim * 0.5, activation="relu"))
+    _model.add(Dropout(dropout))
+    _model.add(Dense(10, activation="sigmoid"))
+    return _model
+
+
+def _rnn(dim=1000, classes=10, dropout=0.6):
+    """recurrent model"""
+    _model = Sequential()
+    _model.add(Embedding(dim, 64))
+    _model.add(GRU(64))
+    _model.add(Dense(input_dim=64, activation="relu"))
+    _model.add(Dropout(dropout))
+    _model.add(Dense(10, activation="sigmoid"))
+    return _model
+
+
 def _save_data(data, file_name=None):
     with open(file_name, "wb") as f_handle:
         pickle.dump(data, f_handle)
 
 
-def model_def(dim=1000):
+def model_def(fcn=True, dim=1000):
     """model compiler"""
-    _model = Sequential()
-    _model.add(Dense(dim, input_dim=dim))
-    _model.add(Dense(dim / 2))
-    _model.add(Dense(10, activation="sigmoid"))
-    _model.compile(loss="binary_crossentropy",
-                   optimizer="adam", metrics=["accuracy"])
-    return _model
+    if fcn:
+        model = _fcn(dim=1000, classes=10)
+    else:
+        model = _rnn(dim=1000, classes=10)
+    model.compile(loss="sparse_categorical_crossentropy",
+                  optimizer="adam", metrics=["accuracy"])
+    return model
+
+
+def plot_metrics(history, metric):
+    """plot train and test metrics."""
+    plt.plot(history.history(metric))
+    plt.plot(history.history["val_" + metric], "")
+    plt.xlabel("Epochs")
+    plt.y_label(metric)
+    plt.legend([metric, "val_" + metric])
+    plt.show()
 
 
 def dataset(test_size=0.33, random_state=42):
@@ -63,7 +106,7 @@ def dataset(test_size=0.33, random_state=42):
     # Read data from disk
     workdir = DATADIR + "*.json"
 
-    #for f_name in glob("/workdir/data/tidy/*.json"):
+    # for f_name in glob("/workdir/data/tidy/*.json"):
     for f_name in glob(workdir):
         df_temp = pd.read_json(f_name, lines=True)
         df = df.append(df_temp)
@@ -73,14 +116,10 @@ def dataset(test_size=0.33, random_state=42):
 def feature_vectorizer(X_train, X_test, y_train, y_test):
     """prepare X data with tfidf and y with multi label binarizer"""
     vectorizer = TfidfVectorizer(
-        analyzer="word",
-        min_df=0.0,
-        max_df=1.0,
-        strip_accents=None,
-        encoding="utf-8",
-        preprocessor=None,
-        token_pattern=r"(?u)\S\S+",
-        max_features=1000,
+        analyzer="word", min_df=0.0,
+        max_df=1.0, strip_accents=None,
+        encoding="utf-8", preprocessor=None,
+        token_pattern=r"(?u)\S\S+", max_features=1000,
     )
     # fit only training data
     vectorizer.fit(X_train)
@@ -97,18 +136,21 @@ def feature_vectorizer(X_train, X_test, y_train, y_test):
     return X_train_features, X_test_features, y_train_features, y_test_features
 
 
-def train():
+def train(plot=False):
     X_train, X_test, y_train, y_test = feature_vectorizer(*dataset())
     # define and train Model
     model = model_def(N_NODES)
-    model.fit(
+    history = model.fit(
         X_train, y_train,
         validation_data=(X_test, y_test), epochs=EPOCH,
         batch_size=BATCH_SIZE, verbose=1)
-    model.save("/workdir/models/git-model.h5")    
-    scores = model.evaluate(X_test, y_test, verbose=0)
-    accuracy = scores[1] * 100
-    logger.debug("Test accuracy: {:2.2f}".format(accuracy))
+    model.save("/workdir/models/git-model.h5")
+    test_loss, test_accuracy = model.evaluate(X_test, y_test, verbose=0)
+    logger.debug("Test accuracy: {:2.2f}".format(test_accuracy * 100))
+    logger.debug("Test loss: {:2.2f}".format(test_loss))
+    if plot:
+        plot_metrics(history, "loss")
+
 
 
 if __name__ == "__main__":
