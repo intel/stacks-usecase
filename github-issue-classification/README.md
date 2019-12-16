@@ -6,6 +6,8 @@ This end-to-end use case uses the [Data Analytics Reference Stack](https://clear
 
 Github issues are currently manually classified, but why not automate the tagging process? A simple ML algorithm can be used to analyze the issue content and tag it automatically, saving time for developers and directing their focus to critical issues. This usecase shows the user how to do exactly that.
 
+![Github issue classifier architecture diagram](https://raw.githubusercontent.com/intel/stacks-usecase/master/github-issue-classification/images/gh-issue-class-fig1.png)
+
 To run the usecase locally, follow the steps below. You will need to manually preprocess the data using [DARS](https://hub.docker.com/r/clearlinux/stacks-dars-mkl) container which is an optimized spark container, train the data with [DLRS](https://hub.docker.com/r/clearlinux/stacks-dars-mkl) which is a deep learning container, then serve it with rest.py, and run the frontend within the website folder.
 
 If you would prefer a simple walkthrough with a jupyter notebook, feel free to explore github-notebook.ipynb. It is a self contained and simplified example of this usecase. Instructions to use are located below under "Training the Model using DLRS and Jupyter Notebooks"
