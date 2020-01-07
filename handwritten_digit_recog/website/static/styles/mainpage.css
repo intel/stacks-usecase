@@ -1,0 +1,27 @@
+.center-div
+{
+     margin: 0 auto;
+     text-align: center;
+}
+
+div#title-box
+{
+    margin: auto;
+    text-align: center;
+    font-size: 24pt;
+    font-weight: bold;
+}
+
+div#author
+{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 10pt;
+}
+
+.fill-text
+{
+margin: auto;
+    text-align:  justify;
+    font-size: 12pt;
+}
