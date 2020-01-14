@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlrs-mnist-website
+  namespace: kubeflow
+  labels:
+    app: digit-classification
+spec:
+  selector:
+    matchLabels:
+      app: digit-classification
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: digit-classification
+        tier: web
+    spec:
+      containers:
+      - name: dlrs-mnist-website
+        image: REGISTRY/dlrs-website
+        args: ["--endpoint", "inference_API_endpoint", "--website_endpoint", "0.0.0.0"]
+        ports:
+        - containerPort: 5000
