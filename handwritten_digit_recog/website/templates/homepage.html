@@ -1,0 +1,25 @@
+<!--doctype html-->
+<head>
+
+    <link rel= "stylesheet" type= "text/css" href= "../static/styles/mainpage.css">
+
+    <title>Handwritten Digit Recognition with Intel's DLRS</title>
+    <div id='title-box'>Handwritten Digit Recognition with Intel's DLRS</div>
+    <div class=fill-text style="text-align:center">Interactive handwritten digit recognition using PyTorch, running on an Intel Deep Learning Reference Stack (DLRS) backend. See clearlinux.org for more information.</div>
+</head>
+
+<body>
+    <div class="center-div">
+
+        <form action="/" method="POST">
+            <p>
+            <INPUT TYPE="Submit" Value="Test Random Number">
+        </form>
+
+        <div>
+            <textarea id="optText" readonly name="optText" rows="6" cols=50 placeholder='Predicted digit'>{{optText if optText is not none}}</textarea>
+        </div>
+
+    </div>
+</body>
+

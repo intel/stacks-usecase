@@ -1,0 +1,14 @@
+FROM clearlinux/stacks-pytorch-oss:v0.5.0
+
+ARG stage 
+ENV STAGE=$stage
+
+WORKDIR /workdir
+COPY python/ python/
+COPY scripts/entrypoint.sh .
+
+RUN chmod +x entrypoint.sh
+
+EXPOSE 5059
+
+ENTRYPOINT ["./entrypoint.sh"]

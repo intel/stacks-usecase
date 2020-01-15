@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlrs-mnist-model-server
+  namespace: kubeflow
+  labels:
+    app: mnist-model-server
+spec:
+  selector:
+    matchLabels:
+      app: mnist-model-server
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: mnist-model-server
+        tier: web
+    spec:
+      containers:
+      - name: dlrs-mnist-model-server
+        image: REGISTRY/dlrs-serve-oss
+        command: ["/workdir/entrypoint.sh"]
+        args: ["-cb", "model-bucket", "-s", "serve", "-t", "gcloud_access_token"]
+        ports:
+        - containerPort: 5059

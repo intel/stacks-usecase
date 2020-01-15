@@ -1,0 +1,9 @@
+FROM clearlinux/stacks-pytorch-oss:v0.5.0
+
+WORKDIR /workdir/website
+COPY website/ /workdir/website/
+
+EXPOSE 5000
+
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT ["python", "app.py"]
