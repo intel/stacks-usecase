@@ -8,22 +8,13 @@ This folder is home for kubeflow specific files to enable DLRS images with vario
 
 #### Pre-requisites:
 
-* A running Kubernetes cluster
+* A running Kubernetes cluster (v1.17.1)
 
-Please refer to: [Run Kubernetes on Clear Linux OS](https://clearlinux.org/documentation/clear-linux/tutorials/kubernetes)
+If running on Clearlinux, please refer to: [Run Kubernetes on Clear Linux OS](https://clearlinux.org/documentation/clear-linux/tutorials/kubernetes)
 
 ## Deploying Kubeflow with kfctl/kustomize
 
-1. Get kfctl tarball, untar and add to your PATH if necessary
-
-```bash
-KFCTL_PATH="path_desired_to_kfctl"
-kfctl_ver=v0.7.0
-KFCTL_URL="https://github.com/kubeflow/kubeflow/releases/download/${kfctl_ver}/kfctl_${kfctl_ver}_linux.tar.gz"
-wget -P ${KFCTL_PATH} ${KFCTL_URL}
-tar -C ${KFCTL_PATH} -xvf ${KFCTL_PATH}/kfctl_v${kfctl_ver}_linux.tar.gz
-export PATH=$PATH:${KFCTL_PATH}
-```
+1. Get kfctl [v1.0.1](https://github.com/kubeflow/kfctl/releases/download/v1.0.1/kfctl_v1.0.1-0-gf3edb9b_linux.tar.gz) tarball, untar and add the binary path to your PATH if desired
 
 2. Install Kubeflow resources
 ```bash
@@ -31,7 +22,7 @@ export PATH=$PATH:${KFCTL_PATH}
 export KF_NAME=<your choice of name for the Kubeflow deployment>
 export BASE_DIR=<path to a base directory>
 export KF_DIR=${BASE_DIR}/${KF_NAME}
-export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v0.7-branch/kfdef/kfctl_k8s_istio.0.7.0.yaml"
+export CONFIG_URI="https://raw.githubusercontent.com/kubeflow/manifests/v1.0-branch/kfdef/kfctl_k8s_istio.v1.0.1.yaml"
 ```
 
 3. Set up and deploy Kubeflow
