@@ -1,4 +1,4 @@
-FROM clearlinux/stacks-dlrs-mkl:v0.5.0
+FROM clearlinux/stacks-dlrs-mkl:v0.6.0
 
 ENV NB_PREFIX /
 RUN mkdir /home/jovyan

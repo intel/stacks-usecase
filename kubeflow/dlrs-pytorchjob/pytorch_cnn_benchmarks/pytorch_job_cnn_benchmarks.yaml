@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
             - name: pytorch
-              image: your-project/stacks-pytorch-kf-mkl:v0.5.0
+              image: your-project/stacks-pytorch-kf-mkl:v0.6.0
     Worker:
       replicas: 1
       restartPolicy: Never 
@@ -19,4 +19,4 @@ spec:
         spec:
           containers: 
             - name: pytorch
-              image: your-project/stacks-pytorch-kf-mkl:v0.5.0
+              image: your-project/stacks-pytorch-kf-mkl:v0.6.0

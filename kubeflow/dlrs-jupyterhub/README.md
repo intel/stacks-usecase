@@ -19,7 +19,7 @@ To prepare an image that can be used with JupyterHub, create an image using DLRS
 1. Create a file named “Dockerfile” With these contents:
 
 ```bash
-FROM clearlinux/stacks-dlrs-mkl:v0.5.0
+FROM clearlinux/stacks-dlrs-mkl:v0.6.0
 
 ENV NB_PREFIX /
 RUN mkdir /home/jovyan
