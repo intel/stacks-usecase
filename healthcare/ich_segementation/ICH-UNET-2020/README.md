@@ -1,2 +1,2 @@
-Exctact the data from physionet.org in this directory`
+Exctract the data from physionet.org in this directory`
 
