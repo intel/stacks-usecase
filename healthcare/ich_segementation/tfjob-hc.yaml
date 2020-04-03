@@ -1,0 +1,40 @@
+apiVersion: kubeflow.org/v1
+kind: TFJob
+metadata:
+  name: tfjob-hc
+  namespace: kubeflow
+spec:
+  tfReplicaSpecs:
+    PS:
+      replicas: 1
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: <your-image> 
+            command:
+              - python
+              - main.py
+    Worker:
+      replicas: 3
+      restartPolicy: OnFailure
+      template:
+        spec:
+          containers:
+          - name: tensorflow
+            image: <your-image>
+            command:
+              - python
+              - main.py
+    Master:
+          replicas: 1
+          restartPolicy: OnFailure
+          template:
+            spec:
+              containers:
+              - name: tensorflow
+                image: <your-image> 
+                command:
+                  - python
+                  - main.py
