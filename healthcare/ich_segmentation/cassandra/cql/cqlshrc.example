@@ -1,0 +1,11 @@
+[authentication]
+username = user
+password = <PASSWORD_FOR_THE_DB>
+
+[connection]
+hostname = 127.0.0.1
+port = 9042
+ 
+[ssl]
+certfile = /path/to/cassandra.cert
+validate = false 

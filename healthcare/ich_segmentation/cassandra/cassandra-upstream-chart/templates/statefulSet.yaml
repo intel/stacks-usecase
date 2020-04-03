@@ -1,0 +1,145 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  {{- $statefulSetName := printf "%s-cassandra" .Release.Name  }}
+  name: {{ $statefulSetName }}
+spec:
+  selector:
+    matchLabels:
+      {{- $appLabel := printf "%s-cassandra" .Release.Name  }}
+      app: {{ $appLabel }} # has to match .spec.template.metadata.labels
+  {{- $serviceName := printf "%s-cassandra" .Release.Name  }}
+  serviceName: {{ $serviceName | quote  }}
+  replicas: {{ .Values.replicaCount  }} # by default is 1
+  template:
+    metadata:
+      labels:
+        app: {{ $appLabel }} # has to match .spec.selector.matchLabels
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: cassandra
+        image: {{ .Values.image.repository  }}/{{ .Values.image.name  }}:{{ .Values.image.tag  }}
+        {{- if and (.Values.enableCommEncryption) (.Values.provideCustomConfig) }}
+        command: ["/bin/bash"]
+        args: ["-c","base64 -d /etc/cassandra/keystore > /etc/cassandra/keystore-decoded;base64 -d /etc/cassandra/truststore > /etc/cassandra/truststore-decoded;gosu cassandra cassandra -f;"]
+        {{- end }}
+        {{- if and (not .Values.enableCommEncryption) (.Values.provideCustomConfig) }}
+        command: ["/bin/bash"]
+        args: ["-c","gosu cassandra cassandra -f;"]
+        {{- end }}
+        ports:
+        - containerPort: 9042
+          name: cql
+        livenessProbe:
+          tcpSocket:
+            port: cql
+          initialDelaySeconds: 45
+          periodSeconds: 30
+        {{- if .Values.resources.enabled }}
+        resources:
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+        {{- end }}
+        {{- if ( not .Values.provideCustomConfig ) }}
+        env:
+        - name: CASSANDRA_SEEDS
+          {{- $seedAddresses := "" }}
+          {{- $seedAddresses =  printf "%s-0.%s.%s.svc.cluster.local" $statefulSetName $serviceName .Release.Namespace }}
+          value: {{ $seedAddresses | quote }}
+        - name: CASSANDRA_CLUSTER_NAME
+          {{- $defaultClusterName := printf "%s-cassandra-k8s-cluster" .Release.Name }}
+          value: {{ .Values.clusterName  | default $defaultClusterName | quote }}
+        {{- if .Values.jvmOpts.enabled }}
+        - name: JVM_OPTS
+          value: {{ .Values.jvmOpts.value }}
+        {{- end }}
+        {{- end }}
+        {{- if or (.Values.enablePersistence) (.Values.provideCustomConfig) }}
+        volumeMounts:
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/cassandra.yaml") (.Values.provideCustomConfig) }}
+        - name: config-volume-cassandra-yaml
+          mountPath: /etc/cassandra/cassandra.yaml
+          subPath: cassandra.yaml
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/keystore") (.Values.provideCustomConfig) }}
+        - name: config-volume-keystore
+          mountPath: /etc/cassandra/keystore
+          subPath: keystore
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/truststore") (.Values.provideCustomConfig) }}
+        - name: config-volume-truststore
+          mountPath: /etc/cassandra/truststore
+          subPath: truststore
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/jmxremote.password") (.Values.provideCustomConfig) }}
+        - name: config-volume-jmxremote
+          mountPath: /etc/cassandra/jmxremote.password
+          subPath: jmxremote.password
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/jmxremote.access") (.Values.provideCustomConfig) }}
+        - name: config-volume-jmxremote-access
+          mountPath: /etc/cassandra/jmxremote.access
+          subPath: jmxremote.access
+        {{- end }}
+        {{- if and (.Files.Glob "files/conf/cassandra-env.sh") (.Values.provideCustomConfig) }}
+        - name: config-volume-cassandra-env
+          mountPath: /etc/cassandra/cassandra-env.sh
+          subPath: cassandra-env.sh
+        {{- end }}
+        {{- if .Values.enablePersistence }}
+        - name: cassandra-data-pvc
+          mountPath: /var/lib/cassandra
+        {{- end }}
+      {{- if (.Values.provideCustomConfig) }}
+      volumes:
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/cassandra.yaml") (.Values.provideCustomConfig) }}
+        - name: config-volume-cassandra-yaml
+          configMap:
+            name: {{ .Release.Name }}-configmap-cassandra-yaml
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/keystore") (.Values.provideCustomConfig) }}
+        - name: config-volume-keystore
+          configMap:
+            name: {{ .Release.Name }}-configmap-keystore
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/truststore") (.Values.provideCustomConfig) }}
+        - name: config-volume-truststore
+          configMap:
+            name: {{ .Release.Name }}-configmap-truststore
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/jmxremote.password") (.Values.provideCustomConfig) }}
+        - name: config-volume-jmxremote
+          configMap:
+            name: {{ .Release.Name }}-configmap-jmxremote
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/jmxremote.access") (.Values.provideCustomConfig) }}
+        - name: config-volume-jmxremote-access
+          configMap:
+            name: {{ .Release.Name }}-configmap-jmxremote-access
+      {{- end }}
+      {{- if and (.Files.Glob "files/conf/cassandra-env.sh") (.Values.provideCustomConfig) }}
+        - name: config-volume-cassandra-env
+          configMap:
+            name: {{ .Release.Name }}-configmap-cassandra-env
+      {{- end }}
+  {{- if .Values.enablePersistence }}
+  volumeClaimTemplates:
+  - metadata:
+      name: cassandra-data-pvc
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      storageClassName: {{ .Values.localStorageClass | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.persistentVolumes.dataVolumeSize  | default "2G" | quote }}
+  {{- end }}
+
+

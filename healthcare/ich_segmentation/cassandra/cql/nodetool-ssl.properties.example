@@ -1,0 +1,7 @@
+-Dcom.sun.management.jmxremote.ssl=true
+-Dcom.sun.management.jmxremote.ssl.need.client.auth=false
+-Dcom.sun.management.jmxremote.registry.ssl=true  
+-Djavax.net.ssl.keyStore=/path/to/keystore/file/.keystore
+-Djavax.net.ssl.keyStorePassword=<PASSWORD_FOR_KEYSTORE_FILE>
+-Djavax.net.ssl.trustStore=/path/to/truststore/file/.truststore
+-Djavax.net.ssl.trustStorePassword=<PASSWORD_FOR_TRUSTSTORE_FILE>
