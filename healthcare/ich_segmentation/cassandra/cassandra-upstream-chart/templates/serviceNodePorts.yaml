@@ -1,0 +1,33 @@
+{{- if .Values.exposeClusterExternally }}
+{{- $statefulSetName := printf "%s-cassandra" .Release.Name  }}
+{{- $statefulServiceName := printf "%s-cassandra" .Release.Name  }}
+{{- $nodeNumber := .Values.replicaCount | int }}
+{{- $releaseName := .Release.Name }}
+{{- $enableJMX := false }}
+{{- if .Values.exposeJmxPort }}
+{{ $enableJMX = true }}
+{{- end }}
+
+{{- $podName := "" }}
+{{- $serviceName := "" }}
+
+{{- range $index, $value := until $nodeNumber }}
+
+{{- $serviceName = printf "%s-cassandra-service-nodeport-%d" $releaseName $index }}
+{{- $podName =  printf "%s-%d" $statefulSetName $index }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $serviceName | quote }}
+spec:
+  type: NodePort
+  externalTrafficPolicy: Local
+  selector:
+    statefulset.kubernetes.io/pod-name: {{ $podName | quote }}
+  ports:
+  - name: cql
+    port: 9042
+    targetPort: cql
+{{- end}}
+{{- end }}

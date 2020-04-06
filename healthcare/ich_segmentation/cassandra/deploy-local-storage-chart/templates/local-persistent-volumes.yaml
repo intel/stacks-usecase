@@ -1,0 +1,32 @@
+{{- $class := .Values.localStorageClassName }}
+{{- $size := .Values.localStorageVolumeSize }}
+{{- $mountPoint := .Values.localStorageDefaultMountpoint }}
+{{- $volumeLabel := .Values.appVolumeLabel }}
+{{- range .Values.localStorageNodes }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  {{- $localStorageVolumeName := printf "local-volume-%s-%s" . $volumeLabel }}
+  name: {{ $localStorageVolumeName | quote }}
+spec:
+  capacity:
+    storage: {{ $size | quote }}
+  # volumeMode field requires BlockVolume Alpha feature gate to be enabled.
+  volumeMode: Filesystem
+  accessModes:
+  - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  storageClassName: {{ $class | quote }}
+  local:
+    path: {{ $mountPoint | quote }}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - {{ . | quote }}
+{{- end }}
+

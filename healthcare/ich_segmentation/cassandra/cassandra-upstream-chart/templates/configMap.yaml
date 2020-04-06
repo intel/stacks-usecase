@@ -1,0 +1,74 @@
+{{- if and (.Files.Glob "files/conf/cassandra.yaml") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-cassandra-yaml
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data: 
+  cassandra.yaml: |
+  {{ .Files.Get "files/conf/cassandra.yaml" | nindent 4 }}
+{{- end }}
+{{- if and (.Files.Glob "files/conf/keystore") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-keystore
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data:
+  keystore: |
+  {{ .Files.Get "files/conf/keystore" | b64enc |nindent 4 }}
+{{- end }}
+{{- if and (.Files.Glob "files/conf/truststore") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-truststore
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data:
+  truststore: |
+  {{ .Files.Get "files/conf/truststore" | b64enc | nindent 4 }}
+{{- end }}
+{{- if and (.Files.Glob "files/conf/jmxremote.password") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-jmxremote
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data:
+  jmxremote.password: |
+  {{- .Files.Get "files/conf/jmxremote.password" | nindent 4 }}
+{{- end }}
+{{- if and (.Files.Glob "files/conf/jmxremote.access") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-jmxremote-access
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data:
+  jmxremote.access: |
+  {{- .Files.Get "files/conf/jmxremote.access" | nindent 4 }}
+{{- end }}
+{{- if and (.Files.Glob "files/conf/cassandra-env.sh") (.Values.provideCustomConfig) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap-cassandra-env
+  labels:
+    app: {{printf "%s-cassandra" .Release.Name }}
+data:
+  cassandra-env.sh: |
+  {{- .Files.Get "files/conf/cassandra-env.sh" | nindent 4 }}
+{{- end }}
+
+
