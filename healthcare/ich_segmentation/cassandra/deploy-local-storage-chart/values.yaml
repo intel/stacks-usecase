@@ -1,0 +1,21 @@
+# If the storage class is already deployed you can use this chart just to create the volume
+createLocalStorageClass: true
+
+# Name of the local storage class to be deployed on K8s
+localStorageClassName: "local-storage-class"
+
+# Label to identify all volumes deployed in a cluster, this label is added to the volume names and is just for informational purposes 
+appVolumeLabel: "database"
+
+# default mountpoint of the local storage on each node 
+localStorageDefaultMountpoint: "/mnt/disks/ssd0"
+
+# Volume size of the local storage
+localStorageVolumeSize: "300G"
+
+# List of hostnames of every node which local storage available
+localStorageNodes:
+        - node01
+        - node02
+        - node03
+        - node04
