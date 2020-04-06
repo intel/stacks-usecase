@@ -1,0 +1,8 @@
+nibabel
+scikit_learn
+pillow
+matplotlib
+google-cloud-storage
+cassandra-driver
+pandas
+seaborn
