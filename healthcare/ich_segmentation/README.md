@@ -1,3 +1,4 @@
+
 # ICH segementation using U-Net
 
 This end-to-end use case uses the [Data Analytics Reference Stack](https://clearlinux.org/stacks/data-analytics) and the [Deep Learning Reference Stack](https://clearlinux.org/stacks/deep-learning) along with Apache* Cassandra* to walk through creating an AI pipeline to help radiologists detect intercranial hemorrhage (ICH). Using data at [PhysioNet](https://physionet.org/content/ct-ich/1.3.1/), we created a solution that can take computerized tomography (CT) images of the brain, process them to extract relevant data, and provide feedback to the radiologist, helping them to focus their examination on the relevant areas of the scan.
@@ -276,11 +277,10 @@ python main.py --infer
 ```
 
 There are additional options and flags available from `main.py`. For a full list, run
+
 ```bash
 python main.py --help
 ```
-
-
 
 ### Mailing List
 
@@ -288,3 +288,4 @@ See our public [mailing list](https://lists.01.org/mailman/listinfo/stacks) page
 
 ### Reporting Security Issues
 Security issues can be reported to Intel's security incident response team via https://intel.com/security.
+
