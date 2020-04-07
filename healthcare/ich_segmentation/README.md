@@ -76,7 +76,7 @@ Follow these steps to deploy and operate DARS on Kubernetes to perform data inge
 
 2. Download the training data set from https://physionet.org/content/ct-ich/1.3.1/ and unpack it into `/mnt/disk/data`
 
-3. Copy the Python requirements file located at: `/ich_segementation/requirements.txt`  into the disk at `/mnt/data/requirements.txt`.
+3. Copy the Python requirements file located at: `/ich_segementation/dars/requirements.txt`  into the disk at `/mnt/data/requirements.txt`.
 
 3. Unmount and detach the disk from the VM. More information can be found in the [GCP documentation](https://cloud.google.com/sdk/gcloud/reference/compute/instances/detach-disk)
 
@@ -99,16 +99,18 @@ Follow these steps to deploy and operate DARS on Kubernetes to perform data inge
 
 #### Launch the main application
 
-1. Navigate to the dars folder and copy the file: `hc_preprocessing_insertion_cassandra.py` into the pod spark-dars-master-0:
+
+1. Edit the `hc_preprocessing_insertion_cassandra.py` file and set the `hostDB` variable with the corresponding Cassandra hostname or IP.
+
+2. Navigate to the dars folder and copy the file: `hc_preprocessing_insertion_cassandra.py` into the pod spark-dars-master-0:
 
    ````bash
    kubectl -n $NAMESPACE cp hc_preprocessing_insertion_cassandra.py spark-dars-master-0:/root/main.py
    ````
 
-2. Enter into the spark-dars-master-0 pod and submit the task to the DARS cluster:
+3. Submit the task to the DARS cluster:
     ````bash
-    kubectl -n $NAMESPACE exec -it spark-dars-master-0 bash
-    spark-submit --master yarn --deploy-mode cluster /root/main.py
+    kubectl -n $NAMESPACE exec -it spark-dars-master-0  -- bash -c "spark-submit --master yarn --deploy-mode cluster /root/main.py"
     ````      
 
 Note the inserted records in the Cassandra database to verify the steps completed successfully.
