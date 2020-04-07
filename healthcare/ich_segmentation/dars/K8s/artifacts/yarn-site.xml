@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+  <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>hdfs-nn-0.hdfs-nn.dars.svc.cluster.local</value>
+  </property>
+ 
+  <property>
+    <name>yarn.resourcemanager.scheduler.class</name>
+    <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.fair.FairScheduler</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.vmem-check-enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
+  </property>
+
+  <property>
+    <name>yarn.application.classpath</name>
+    <value>$JAVA_HOME,
+           $HADOOP_CONF_DIR,
+           $HADOOP_HOME
+    </value>
+  </property>
+</configuration>

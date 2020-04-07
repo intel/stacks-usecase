@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment-configmap
+data:
+  SPARK_WORKER_CORES: "2"
+  SPARK_LOG_DIR: "/var/log/spark"
+  SPARK_WORKER_DIR: "/var/log/spark/work"
+  SPARK_WORKER_LOG_DIR: "/var/log/spark/work"

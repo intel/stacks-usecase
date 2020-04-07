@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  labels:
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/instance: v1.0
+    app.kubernetes.io/managed-by: v1
+    app.kubernetes.io/component: worker-autoscaler
+  name: spark-dars-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: statefulset
+    name: spark-dars-worker
+  minReplicas: 2
+  maxReplicas: 8
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: 20
