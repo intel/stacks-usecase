@@ -58,7 +58,7 @@ class ICHDataPreprocess:
         enable = 0
 
         cluster = Cluster(self.db_host)
-        session = cluster.connect('healthcare_keyspace_testing_dars')
+        session = cluster.connect('healthcare_keyspace')
         blob_insertion = session.prepare("INSERT INTO processed_data(id,date,is_label,patient_number,slice_number,intraventricular,intraparenchymal,subarachnoid,epidural,subdural,no_hemorrhage,fracture_yes_no,image_filename,image_blob) VALUES ( UUID() , TOUNIXTIMESTAMP(now()), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )")
 
         if enable < 1:
