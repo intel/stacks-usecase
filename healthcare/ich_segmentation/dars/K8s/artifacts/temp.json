@@ -1,0 +1,18 @@
+{
+  "apiVersion": "v1",
+  "kind": "Namespace",
+  "metadata": {
+    "creationTimestamp": "2020-04-07T09:00:02Z",
+    "deletionTimestamp": "2020-04-07T09:06:23Z",
+    "name": "dars2",
+    "resourceVersion": "45727433",
+    "selfLink": "/api/v1/namespaces/dars2",
+    "uid": "2aab2e83-78ae-11ea-8613-42010a8a008a"
+  },
+  "spec": {
+    "finalizers": []
+  },
+  "status": {
+    "phase": "Terminating"
+  }
+}

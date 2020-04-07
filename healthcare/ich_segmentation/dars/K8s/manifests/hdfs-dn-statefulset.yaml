@@ -1,0 +1,48 @@
+apiVersion: apps/v1 # use apps/v1beta1 for versions before 1.9.0
+kind: StatefulSet
+metadata:
+  name: hdfs-dn
+spec:
+  serviceName: "hdfs-dn"
+  replicas: 4
+  selector:
+    matchLabels:
+      component: hdfs-dn
+  template:
+    metadata:
+      labels:
+        component: hdfs-dn
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: hdfs-dn
+        image: STACKIMAGE
+        imagePullPolicy: IfNotPresent
+        command:
+           - "/bin/bash"
+           - "/tmp/config/bootstrap.sh"
+           - "-h"
+        envFrom:
+          - configMapRef:
+              name: environment-configmap
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "100m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        volumeMounts:
+          - name: setup-files-configmap
+            mountPath: /tmp/config
+          - name: hdfs-dn-volume
+            mountPath: "/mnt/data"
+            readOnly: true
+      volumes:
+        - name: setup-files-configmap
+          configMap:
+            name: setup-files-configmap
+        - name: hdfs-dn-volume
+          persistentVolumeClaim:
+            claimName: hdfs-dn-claim
+            readOnly: true

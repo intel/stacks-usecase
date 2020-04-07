@@ -1,0 +1,64 @@
+apiVersion: apps/v1 # use apps/v1beta1 for versions before 1.9.0
+kind: StatefulSet
+metadata:
+  name: hdfs-nn
+spec:
+  serviceName: "hdfs-nn"
+  replicas: 1
+  selector:
+    matchLabels:
+      component: hdfs-nn
+  template:
+    metadata:
+      labels:
+        component: hdfs-nn
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: hdfs-nn
+        image: STACKIMAGE
+        imagePullPolicy: IfNotPresent
+        command:
+           - "/bin/bash"
+           - "/tmp/config/bootstrap.sh"
+           - "-h"
+        envFrom:
+          - configMapRef:
+              name: environment-configmap
+        resources:
+          requests:
+            memory: "1024Mi"
+            cpu: "100m"
+          limits:
+            memory: "2048Mi"
+            cpu: "1000m"
+        livenessProbe:     
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          timeoutSeconds: 50
+          successThreshold: 1
+          failureThreshold: 2
+        readinessProbe:
+          tcpSocket:
+            port: 9000
+          initialDelaySeconds: 50
+          periodSeconds: 10
+          timeoutSeconds: 50
+          successThreshold: 1
+          failureThreshold: 6
+        volumeMounts:
+          - name: setup-files-configmap
+            mountPath: /tmp/config
+          - name: hdfs-nn-volume
+            mountPath: "/mnt/data"
+            readOnly: true
+      volumes:
+        - name: setup-files-configmap
+          configMap:
+            name: setup-files-configmap
+        - name: hdfs-nn-volume
+          persistentVolumeClaim:
+            claimName: hdfs-dn-claim
+            readOnly: true

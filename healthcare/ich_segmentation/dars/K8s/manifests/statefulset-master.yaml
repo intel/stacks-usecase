@@ -1,0 +1,75 @@
+apiVersion: apps/v1  # use apps/v1beta1 for versions before 1.9.0
+kind: StatefulSet
+metadata:
+  name: spark-dars-master
+  labels:
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/instance: v1.0
+    app.kubernetes.io/managed-by: v1
+    app.kubernetes.io/component: master
+    component: statefulset
+spec:
+  serviceName: dars-headless-svc
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spark
+      app.kubernetes.io/instance: v1.0
+      app.kubernetes.io/component: master
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spark
+        app.kubernetes.io/instance: v1.0
+        app.kubernetes.io/component: master
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: spark-master
+          image: STACKIMAGE
+          imagePullPolicy: IfNotPresent
+          command:
+           - "/bin/bash"
+           - "/tmp/config/bootstrap.sh"
+           - "-d"
+          envFrom:
+            - configMapRef:
+                name: environment-configmap
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+            - name: cluster
+              containerPort: 7077
+          env:
+          - name: SPARK_MODE
+            value: "master"
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 2
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            successThreshold: 1
+            failureThreshold: 6
+          volumeMounts:
+            - name: setup-files-configmap
+              mountPath: /tmp/config
+      volumes:
+        - name: setup-files-configmap
+          configMap:
+            name: setup-files-configmap

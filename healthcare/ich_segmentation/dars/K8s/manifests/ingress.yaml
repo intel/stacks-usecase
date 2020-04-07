@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: spark-dars-ingress
+  labels:
+    app.kubernetes.io/name: spark
+    app.kubernetes.io/instance: v1.0
+    app.kubernetes.io/managed-by: v1
+    app.kubernetes.io/component: ingress
+  annotations:
+    kubernetes.io/tls-acme: "false"
+spec:
+  rules:
+  - host: spark.local
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: dars-master-svc
+          servicePort: http

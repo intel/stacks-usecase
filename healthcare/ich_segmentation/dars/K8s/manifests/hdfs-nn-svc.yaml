@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: hdfs-nn
+  labels:
+    component: hdfs-nn
+spec:
+  ports:
+  - name: dfs
+    port: 9000
+    protocol: TCP
+  clusterIP: None
+  selector:
+    component: hdfs-nn
