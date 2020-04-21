@@ -1,0 +1,4 @@
+sklearn
+psutil
+fire
+pillow==6.2.2

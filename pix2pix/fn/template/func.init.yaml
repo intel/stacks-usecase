@@ -1,0 +1,3 @@
+runtime: docker
+memory: 1024
+timeout: 90
