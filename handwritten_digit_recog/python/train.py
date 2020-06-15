@@ -31,6 +31,7 @@
 
 from __future__ import print_function
 import argparse
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -167,7 +168,7 @@ def main():
 
     torch.manual_seed(args.seed)
 
-    kwargs = {"num_workers": int(cpu_count()/2), "pin_memory": True}
+    kwargs = {"num_workers": int(os.cpu_count()/2), "pin_memory": True}
     train_loader = torch.utils.data.DataLoader(
         datasets.MNIST("data", train=True, download=True, transform=transform),
         batch_size=args.batch_size,
