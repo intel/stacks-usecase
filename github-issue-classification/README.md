@@ -102,7 +102,7 @@ import spark.implicits._
 ```
 2. Load the data to a spark dataframe
 ```bash
-var df = spark.read.option("multiline", true).json("data/raw/*.json")
+var df = spark.read.option("multiline", true).json("file:///workdir/data/raw/*.json")
 ```
 3. Select the labels, name, body, and id columns
 ```bash
@@ -134,7 +134,7 @@ df = df.join(df2, "id").select("body","labels")
 ```
 10. Save the data
 ```bash
-df.write.json("data/tidy/")
+df.write.json("file:///workdir/data/tidy/")
 ```
 Or, from within the spark shell run:
 ```bash
