@@ -1,4 +1,4 @@
-FROM clearlinux/stacks-pytorch-oss:v0.5.0
+FROM sysstacks/dlrs-pytorch-clearlinux:v0.6.0-oss
 
 WORKDIR /workdir/website
 COPY website/ /workdir/website/
