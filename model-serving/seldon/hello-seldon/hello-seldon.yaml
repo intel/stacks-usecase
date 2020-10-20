@@ -1,0 +1,21 @@
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: hello-seldon
+spec:
+  name: hello-seldon-deployment
+  predictors:
+  - componentSpecs:
+    - spec:
+        containers:
+        - image: repository/dlrs-serving:v0.1
+          imagePullPolicy: IfNotPresent
+          name: classifier
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: classifier
+      type: MODEL
+    name: default
+    replicas: 1
