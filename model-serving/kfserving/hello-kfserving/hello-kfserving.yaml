@@ -1,0 +1,14 @@
+iapiVersion: serving.kubeflow.org/v1alpha2
+kind: InferenceService
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: dlrs-kfserving
+spec:
+  default:
+    predictor:
+      custom:
+        name: custom
+        container:
+          image: repository/dlrs-serving:v0.1
+          imagePullPolicy: IfNotPresent
