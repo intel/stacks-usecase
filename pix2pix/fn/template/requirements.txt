@@ -1,4 +1,4 @@
 sklearn
 psutil
 fire
-pillow==6.2.2
+pillow==7.*
