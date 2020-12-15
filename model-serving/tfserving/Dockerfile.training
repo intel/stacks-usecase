@@ -1,0 +1,7 @@
+FROM sysstacks/dlrs-tensorflow2-ubuntu:v0.7.0
+
+COPY scripts/training_entrypoint.sh /usr/bin/training_entrypoint.sh
+
+RUN chmod +x /usr/bin/training_entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/training_entrypoint.sh"]
