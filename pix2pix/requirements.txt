@@ -1,4 +1,4 @@
 sklearn
 psutil
 fire
-pillow-simd
+Pillow>=8.1.1
