@@ -1,4 +1,4 @@
-FROM clearlinux/stacks-dlrs-mkl:v0.6.0
+FROM sysstacks/dlrs-tensorflow2-ubuntu:v0.9.0
 
 ENV NB_PREFIX /
 RUN mkdir /home/jovyan

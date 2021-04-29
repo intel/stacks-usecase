@@ -1,4 +1,4 @@
-FROM clearlinux/stacks-pytorch-ubuntu:v0.7.0
+FROM sysstacks/dlrs-pytorch-ubuntu:v0.9.0
 
 WORKDIR /workdir
 COPY cnn_benchmarks.py .
