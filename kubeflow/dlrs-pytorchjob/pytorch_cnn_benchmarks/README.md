@@ -12,7 +12,7 @@ This directory contains code to train convolutional neural networks using cnn_be
 
 ## Build Image
 
-The PyTorch Job consumes a custom DLRS image for deployment. The default image name and tag is `repository/dlrs-pytorch-kf:v0.7.0`; you should change the image name to match your project and make the proper changes in `pytorch_job_cnn_benchmarks.yaml`.
+The PyTorch Job consumes a custom DLRS image for deployment. The default image name and tag is `repository/dlrs-pytorch-kf:v0.9.0`; you should change the image name to match your project and make the proper changes in `pytorch_job_cnn_benchmarks.yaml`.
 
 ```bash
 docker build -f Dockerfile -t repository/dlrs-pytorch-kf:v0.9.0 .
