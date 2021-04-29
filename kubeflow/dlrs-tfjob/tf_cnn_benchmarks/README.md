@@ -15,10 +15,10 @@ This directory contains code to train convolutional neural networks using [tf_cn
 
 ## Build Image
 
-The TFJob consumes a custom DLRS image for deployment. The default image name and tag is `repository/dlrs-tensorflow-kf:v0.7.0`; you should change the image name to match your project and make the proper changes in `tf_job_cnn_benchmarks.yaml`.
+The TFJob consumes a custom DLRS image for deployment. The default image name and tag is `repository/dlrs-tensorflow-kf:v0.9.0`; you should change the image name to match your project and make the proper changes in `tf_job_cnn_benchmarks.yaml`.
 
 ```bash
-docker build -f Dockerfile -t repository/dlrs-tensorflow-mkl:v0.7.0 .
+docker build -f Dockerfile -t repository/dlrs-tensorflow-mkl:v0.9.0 .
 ```
 
 >NOTE: TFJobs use docker image pull requests, thus the image built in the previous step should be available either on a local or remote registry. Please refer to the Kubernetes [documentation](https://kubernetes.io/docs/concepts/containers/images/) for more information.
