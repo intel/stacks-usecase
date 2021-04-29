@@ -11,7 +11,7 @@ spec:
         spec:
           containers:
             - name: pytorch
-              image: repository/dlrs-pytorch-kf:v0.7.0
+              image: repository/dlrs-pytorch-kf:v0.9.0
     Worker:
       replicas: 1
       restartPolicy: Never 
