@@ -1,4 +1,5 @@
 sklearn
 psutil
 fire
-Pillow>=8.1.1
+pillow>=8.1.*
+
