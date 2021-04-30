@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
           - name: tensorflow
-            image: repository/dlrs-tensorflow-kf:v0.7.0 
+            image: repository/dlrs-tensorflow-kf:v0.9.0 
             workingDir: /opt/tf-benchmarks/scripts/tf_cnn_benchmarks
             command:
               - python
@@ -32,7 +32,7 @@ spec:
         spec:
           containers:
           - name: tensorflow
-            image: repository/dlrs-kf-mkl:v0.5.0
+            image: repository/dlrs-kf-mkl:v0.9.0
             workingDir: /opt/tf-benchmarks/scripts/tf_cnn_benchmarks
             command:
               - python
@@ -52,7 +52,7 @@ spec:
             spec:
               containers:
               - name: tensorflow
-                image: repository/dlrs-tensorflow-kf:v0.7.0
+                image: repository/dlrs-tensorflow-kf:v0.9.0
                 workingDir: /opt/tf-benchmarks/scripts/tf_cnn_benchmarks
                 command:
                   - python
