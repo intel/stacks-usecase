@@ -3,7 +3,9 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Build Status](https://travis-ci.com/intel/stacks-usecase.svg?branch=master)](https://travis-ci.com/intel/stacks-usecase)
 
-The Clear Linux* OS  based [reference stacks](https://github.com/intel/stacks) allow developers to quickly get up and running with images tailored, optimized, and tested together for specific use cases. This repository offers example use cases to explore the possibilities.
+Intel System [stacks](https://github.com/intel/stacks) allow developers to quickly get up and running with images tailored, optimized, and tested together for specific use cases. This repository offers example use cases to explore the possibilities, an example architecture used for github issue classifiction is as below, please see the project directory for more details.
+
+<img src=https://raw.githubusercontent.com/intel/stacks-usecase/master/github-issue-classification/images/gh-issue-class-fig1.png>
 
 ## Contributing
 
