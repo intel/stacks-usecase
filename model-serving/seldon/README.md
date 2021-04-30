@@ -32,7 +32,7 @@ class Model():
 2. Create a container image that includes your model class from the previous step and that runs the `seldon-core-microservice`. Since DLRS already comes with `seldon-core` it is very easy to just set up:
 
 ```Dockerfile
-FROM sysstacks/dlrs-tensorflow-ubuntu:v0.7.0
+FROM sysstacks/dlrs-tensorflow-ubuntu:v0.9.0
 WORKDIR /model-server
 COPY Model.py
 EXPOSE 5000

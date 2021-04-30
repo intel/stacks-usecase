@@ -36,7 +36,7 @@ Define a Dockerfile in the same directory where `MyModel.py` is as it will be co
 > NOTE: All DLRS flavours have `seldon-core` installed already, so you can use any in your deployments depending on your needs.
 
 ```Dockerfile
-FROM sysstacks/dlrs-tensorflow-ubuntu:v0.7.0
+FROM sysstacks/dlrs-tensorflow-ubuntu:v0.9.0
 WORKDIR /model-server
 COPY . .
 EXPOSE 5000
