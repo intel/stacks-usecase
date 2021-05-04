@@ -45,7 +45,7 @@ Define a Dockerfile in the same directory where `MyModel.py` is as it will be co
 > NOTE: All flavours of DLRS can be used here, choose one depending on your needs.
 
 ```Dockerfile
-FROM sysstacks/dlrs-tensorflow-ubuntu:v0.7.0
+FROM sysstacks/dlrs-tensorflow-ubuntu:v0.9.0
 WORKDIR /model-server
 RUN pip install --no-cache-dir kfserving
 

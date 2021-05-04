@@ -4,8 +4,8 @@ This document will guide you through the process of deploying a machine learning
 
 ### Software
 
-* DLRS v0.7.0 with TensorFlow 2.4 (sysstacks/dlrs-tensorflow2-ubuntu:v0.7.0)
-* DLRS v0.7.0 with TensorFlow Serving 2.3 (sysstacks/dlrs-serving-ubuntu:v0.7.0)
+* DLRS v0.9.0 with TensorFlow 2.4 (sysstacks/dlrs-tensorflow2-ubuntu:v0.9.0)
+* DLRS v0.9.0 with TensorFlow Serving 2.4 (sysstacks/dlrs-serving-ubuntu:v0.9.0)
 * Prometheus 2.23
 * Docker 18 or above
 
@@ -74,7 +74,7 @@ $ ls shared/models
 1/ 
 ```
 
-## Serving a model with dlrs-serving and TensorFlow Serving 2.3
+## Serving a model with dlrs-serving and TensorFlow Serving 2.4
 
 Once saved, the model can be loaded into a model server. dlrs-serving provides the environment for running a model server with TensorFlow Serving. In this section, dlrs-serving will be used for building a serving container image.
 
