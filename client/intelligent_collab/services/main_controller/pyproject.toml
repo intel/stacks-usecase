@@ -12,6 +12,7 @@ typer = "^0.3.2"
 uvicorn = "^0.13.4"
 requests = "^2.25.1"
 SQLAlchemy = "^1.4.13"
+loguru = "^0.5.3"
 
 [tool.poetry.dev-dependencies]
 black = "^21.4b2"

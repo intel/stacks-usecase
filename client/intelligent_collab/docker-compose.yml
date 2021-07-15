@@ -1,8 +1,8 @@
 version: "3.5"
 services:
   main_controller:
-    container_name: icollab-main-service
-    image: icollab-main-service
+    container_name: ic-main-controller
+    image: ic-main-controller
     build:
       context: ./services/main_controller
       dockerfile: ./Dockerfile
@@ -13,11 +13,11 @@ services:
       - API_PORT=8000
     ports:
       - "${BACKEND_PORT:-8000}:8000"
-  effects_container:
-    container_name: icollab-effects
-    image: icollab-effects
+  effects_service:
+    container_name: ic-effects-service
+    image: ic-effects-service
     build:
-      context: ./services/effects_container/server
+      context: ./services/effects_service
       dockerfile: ./Dockerfile
     networks:
       icnet:
@@ -25,12 +25,12 @@ services:
     environment:
       - API_PORT=8000
     volumes:
-      - ${MODELS_DIR:-./saved_models}:/workspace/src/effects_container/models
-  video_streaming_proxy:
-    container_name: icollab-videoproxy
-    image: icollab-videoproxy
+      - ${MODELS_DIR:-./saved_models}:/workspace/src/effects_service/models
+  video_proxy:
+    container_name: ic-video-proxy
+    image: ic-video-proxy
     build:
-      context: ./services/video_streaming_proxy
+      context: ./services/video_proxy
       dockerfile: ./Dockerfile
     networks:
       icnet:
@@ -43,11 +43,11 @@ services:
       - ZMQ_IP=172.25.0.4
     volumes:
       - /dev/:/dev
-  video_device_manager:
-    container_name: icollab-devmanager
-    image: icollab-devmanager
+  device_manager:
+    container_name: ic-device-manager
+    image: ic-device-manager
     build:
-      context: ./services/video_device_manager
+      context: ./services/device_manager
       dockerfile: ./Dockerfile
     networks:
       icnet:
@@ -60,12 +60,11 @@ services:
     volumes:
       - /lib/modules:/lib/modules
       - /dev/:/dev:ro
-      - /usr/src:/usr/src
-  effects_controller:
-    container_name: icollab-efx-control
-    image: icollab-efx-control
+  ui_controller:
+    container_name: ic-ui-controller
+    image: ic-ui-controller
     build:
-      context: ./services/effects_controller/ui
+      context: ./services/ui_controller
       dockerfile: ./Dockerfile
     networks:
       icnet:
