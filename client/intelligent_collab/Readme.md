@@ -7,7 +7,7 @@ enabled on Intel hardware. It utilizes Intel hardware features with the system c
 containers (Optimized and third party AI algorithms such as image stylization, object detection, and others), the incoming stream 
 container, the video stream proxy container, and other architectural building blocks.
 
-
+<img src="./icollab_arch.png" alt="intelligent collab architecture diagram" width="700"/>
 
 ## Installation
 
