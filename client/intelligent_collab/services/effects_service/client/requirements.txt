@@ -1,0 +1,4 @@
+pillow
+msgpack
+msgpack_numpy
+zmq
