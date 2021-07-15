@@ -173,9 +173,9 @@ def get_port_fwd():
     services = subprocess.check_output(['docker-compose', 'ps', '-a'])
     lines = services.decode().split("\n")
     for line in lines:
-        if line.startswith('icollab-efx-control'):
+        if line.startswith('ic-ui-controller'):
             ui_port = int(line.split()[-1].split('->')[0].split(":")[1])
-        if line.startswith('icollab-main-service'):
+        if line.startswith('ic-main-controller'):
             backend_port = int(line.split()[-1].split('->')[0].split(":")[1])
         if ui_port and backend_port:
             break
