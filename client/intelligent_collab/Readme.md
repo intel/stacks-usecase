@@ -65,27 +65,6 @@ with the automation for installing from source code
 ./services/video_device_manager/scripts/install_virtual_camera.sh
 ```
 
-## Notes
-
-**Hardware configuration used for this application development and testing:**
-
-- 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
-- 16 G RAM
-- 938 SSD
-- Ubuntu 20.04.2 LTS (GNU/Linux 5.9.0-050900-generic x86_64)
-- Docker, Server Version: 20.10.7
-- Chrome Version 91.0.4472.114 (Official Build) (64-bit)
-  - ***Due to differences in getUserMedia function between Chrome and Firefox this project is only compatible in Chrome.***
-
-**Known issues:**
-
-Some people have experienced issues when `secure boot` is enabled, you
-can take a look in the following link for guidance. In some cases, the
-only solution is to disable `secure boot` in BIOS.
-
-- [Unsigned v4l2loopback module leads to error](https://github.com/umlaeute/v4l2loopback/issues/306)
-
-
 ## Usage
 
 ### Startup services
@@ -122,6 +101,35 @@ Example:
 ```bash
 UI_PORT=8081 BACKEND_PORT=8001 python icollab.py start
 ```
+
+## Notes
+
+**Hardware configuration used for this application development and testing:**
+
+- 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
+- 16 G RAM
+- 938 SSD
+- Ubuntu 20.04.2 LTS (GNU/Linux 5.9.0-050900-generic x86_64)
+- Docker, Server Version: 20.10.7
+- Chrome Version 91.0.4472.114 (Official Build) (64-bit)
+  - ***Due to differences in getUserMedia function between Chrome and Firefox this project is only compatible in Chrome.***
+
+**Known issues:**
+
+Some people have experienced issues when `secure boot` is enabled, you
+can take a look in the following link for guidance. In some cases, the
+
+only solution is to disable `secure boot` in BIOS.
+
+
+
+- [Unsigned v4l2loopback module leads to error](https://github.com/umlaeute/v4l2loopback/issues/306)
+
+
+
+
+
+
 
 ## Contributing
 
