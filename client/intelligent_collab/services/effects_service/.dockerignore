@@ -1,0 +1,10 @@
+src/effects_service/__pycache__
+src/effects_service/logs
+src/effects_service/models
+src/effects_service/object_detection
+tests
+poetry.lock
+Dockerfile
+Makefile
+LICENSE
+Readme.md
