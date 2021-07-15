@@ -1,6 +1,8 @@
 # Intelligent Collaboration Application
 
-The Intelligent Collaboration application enables a user to modify their camera stream using AI models. The solution  enables 
+The Intelligent Collaboration application enables a user to modify their camera stream using AI models. 
+
+The solution  enables 
 functionalities such as background blur, video segmentation, etc., using corresponding deep learning models during a live streaming session.The 
 Intelligent Collaboration software has is designed on the Linux platform, and is scalable to Chrome and Windows Platforms, and is 
 enabled on Intel hardware. It utilizes Intel hardware features with the system containers (Deep Learning Reference Stack), and function 
