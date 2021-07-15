@@ -1,0 +1,8 @@
+src/video_proxy/__pycache__
+src/video_proxy/logs
+tests
+poetry.lock
+Dockerfile
+Makefile
+LICENSE
+Readme.md
