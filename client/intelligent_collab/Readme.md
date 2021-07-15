@@ -67,7 +67,7 @@ with the automation for installing from source code
 
 ## Notes
 
-**Hardware configuration used for this application demonstration:**
+**Hardware configuration used for this application development and testing:**
 
 - 11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz
 - 16 G RAM
