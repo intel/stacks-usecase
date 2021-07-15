@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "main controller"
+version = "0.1.0"
+description = "main controller service that orchestrates the end-to-end service"
+authors = ["Your Name <you@example.com>"]
+license = "BSD"
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+fastapi = "^0.63.0"
+typer = "^0.3.2"
+uvicorn = "^0.13.4"
+requests = "^2.25.1"
+SQLAlchemy = "^1.4.13"
+
+[tool.poetry.dev-dependencies]
+black = "^21.4b2"
+pytest = "^6.2.3"
+pytest-black = "^0.3.12"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

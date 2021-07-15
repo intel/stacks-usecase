@@ -1,0 +1,84 @@
+version: "3.5"
+services:
+  main_controller:
+    container_name: icollab-main-service
+    image: icollab-main-service
+    build:
+      context: ./services/main_controller
+      dockerfile: ./Dockerfile
+    networks:
+      icnet:
+        ipv4_address: 172.25.0.3
+    environment:
+      - API_PORT=8000
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+  effects_container:
+    container_name: icollab-effects
+    image: icollab-effects
+    build:
+      context: ./services/effects_container/server
+      dockerfile: ./Dockerfile
+    networks:
+      icnet:
+        ipv4_address: 172.25.0.4
+    environment:
+      - API_PORT=8000
+    volumes:
+      - ${MODELS_DIR:-./saved_models}:/workspace/src/effects_container/models
+  video_streaming_proxy:
+    container_name: icollab-videoproxy
+    image: icollab-videoproxy
+    build:
+      context: ./services/video_streaming_proxy
+      dockerfile: ./Dockerfile
+    networks:
+      icnet:
+        ipv4_address: 172.25.0.5
+    privileged: true
+    cap_add:
+      - ALL
+    environment:
+      - API_PORT=8000
+      - ZMQ_IP=172.25.0.4
+    volumes:
+      - /dev/:/dev
+  video_device_manager:
+    container_name: icollab-devmanager
+    image: icollab-devmanager
+    build:
+      context: ./services/video_device_manager
+      dockerfile: ./Dockerfile
+    networks:
+      icnet:
+        ipv4_address: 172.25.0.6
+    environment:
+      - API_PORT=8000
+    privileged: true
+    cap_add:
+      - ALL
+    volumes:
+      - /lib/modules:/lib/modules
+      - /dev/:/dev:ro
+      - /usr/src:/usr/src
+  effects_controller:
+    container_name: icollab-efx-control
+    image: icollab-efx-control
+    build:
+      context: ./services/effects_controller/ui
+      dockerfile: ./Dockerfile
+    networks:
+      icnet:
+        ipv4_address: 172.25.0.7
+    ports:
+      - "${UI_PORT:-8080}:80"
+    environment:
+      - REACT_APP_MAIN_CONTROLLER_API=http://172.25.0.3:8000
+
+networks:
+  icnet:
+    name: icnet
+    driver: bridge
+    ipam:
+        config:
+            - subnet: 172.25.0.0/16
