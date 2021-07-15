@@ -1,0 +1,8 @@
+src/device_manager/__pycache__
+src/device_manager/logs
+tests
+poetry.lock
+Dockerfile
+Makefile
+LICENSE
+Readme.md
