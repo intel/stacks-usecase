@@ -3,4 +3,4 @@
 *.pyc
 *.egg-info/
 pages/
-
+!client/intelligent_collab/services/ui_controller/src/ui_controller/src/pages

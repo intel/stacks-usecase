@@ -11,7 +11,7 @@ import {
   Switch,
   Route
 } from "react-router-dom";
-import EffectHandler from '../components/effect-handler/EffectHandler';
+import EffectsController from '../pages/effects-controller/EffectsController';
 import Sidebar from '../components/sidebar/Sidebar';
 
 function App({ classes }) {
@@ -29,7 +29,7 @@ function App({ classes }) {
         <div className={classes.mainContent}>
           <Switch>
             <Route exact path="/">
-              <EffectHandler />
+              <EffectsController />
             </Route>
           </Switch>
         </div>
