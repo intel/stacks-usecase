@@ -17,7 +17,7 @@ FROM clearlinux/stacks-dlrs-mkl
 
 WORKDIR /workdir/
 COPY . /workdir/
-RUN pip install -r /workdir/docker/requirements.txt
+RUN pip install --no-cache-dir -r /workdir/docker/requirements.txt
 RUN echo -e "\e[31mThis server should only be used for debugging purposes."
 ENTRYPOINT ["hypercorn","-kuvloop", "-b0.0.0.0:5059", "--debug", "-w8"]
 CMD ["/workdir/python/rest:app"]
