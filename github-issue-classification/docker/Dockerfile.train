@@ -19,4 +19,4 @@ WORKDIR /tmp/
 
 COPY requirements_train.txt .
 
-RUN pip install -r requirements_train.txt
+RUN pip install --no-cache-dir -r requirements_train.txt

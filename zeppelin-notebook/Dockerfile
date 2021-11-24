@@ -20,7 +20,7 @@ FROM clearlinux/stacks-dars-mkl:v0.1.2
 LABEL maintainer=otc-swstacks@intel.com
 
 COPY requirements.txt /
-RUN pip install -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENV SPARK_MASTER_PORT=7077
 ENV ZEPPELIN_HOME /opt/zeppelin

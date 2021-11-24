@@ -2,7 +2,7 @@ FROM clearlinux/stacks-dlrs_2-mkl
 
 RUN swupd clean && swupd bundle-add vim
 
-RUN pip install \
+RUN pip install --no-cache-dir \
     matplotlib seaborn \
     pillow sklearn nibabel \
     google-cloud-storage \
