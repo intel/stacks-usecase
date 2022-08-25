@@ -15,7 +15,7 @@
     "react-script": "^2.0.5",
     "react-scripts": "^4.0.3",
     "react-webcam": "^5.2.3",
-    "sync-fetch": "^0.3.0",
+    "sync-fetch": "^0.4.1",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
